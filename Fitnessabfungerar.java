@@ -2,7 +2,7 @@ import java.io.*;
 import java.sql.*;
 import org.sqlite.SQLiteConfig;
 
-public class Fitnessab {
+public class Fitnessabfungerar {
  
       static int dateOfBirth;
       static String mFirstName;
