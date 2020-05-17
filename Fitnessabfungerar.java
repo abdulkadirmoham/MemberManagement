@@ -42,8 +42,8 @@ public class Fitnessabfungerar {
    
  
    // Sokvog till SQLite-databas. OBS! andra sokvag sa att den pekar ut din databas
-   public static final String DB_URL = "jdbc:sqlite:fitnessdb.db";
-   // Namnet på den driver som används av java för att prata med SQLite
+   public static final String DB_URL = "jdbc:sqlite:C:/programmering/membership_course_db4.2.db";
+   // Namnet på den driver som används av java för attprata med SQLite
    public static final String DRIVER = "org.sqlite.JDBC";  
 
    public static void main(String[] args) throws IOException {
@@ -71,7 +71,7 @@ public class Fitnessabfungerar {
       while (fortsatt) {
       
          System.out.println("P - Ny medlem");
-    	   System.out.println("T - Ny tidrapport");
+    	   System.out.println("U - Ny tidrapport");
     	   System.out.println("L - Se tidrapporter for person");
     	   System.out.println("S - Se summa arbetade timmar");
     	   System.out.println("A - Se alla personer och deras tidsrapporter");
@@ -96,7 +96,7 @@ public class Fitnessabfungerar {
             String mEmail = input.readLine();
             
             System.out.println("Enter Phone number");
-            int mPhoneNo = Integer.parseInt(input.readLine());
+            mPhoneNo = Integer.parseInt(input.readLine());
                         
             System.out.println("Enter Address");
             String mAddress = input.readLine();
@@ -150,6 +150,27 @@ public class Fitnessabfungerar {
                 }
             }
             break;
+            
+            case 'U'://update phone
+            
+            System.out.println("Enter memberID");
+            memberID = Integer.parseInt(input.readLine());
+            
+            
+            System.out.println("Enter Phone number");
+           mPhoneNo = Integer.parseInt(input.readLine());
+            
+             try {
+               String inserty = "UPDATE Member SET mPhoneNo=?  WHERE memberID=?;";
+               PreparedStatement pstmt = conn.prepareStatement(inserty);
+               pstmt.setInt(1, mPhoneNo);
+               
+            }
+            catch (java.sql.SQLException e2){
+               System.out.println(e2.getMessage());
+            } 
+            break;           
+            
    
             case 'T':
             System.out.println("Ange Personnr (YYYYMMDD)");
