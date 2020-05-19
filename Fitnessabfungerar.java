@@ -151,19 +151,22 @@ public class Fitnessabfungerar {
             }
             break;
             
-            case 'U'://update phone
+            case 'U'://update phoneNO
+           
+            System.out.println("Enter Phone number");
+           mPhoneNo = Integer.parseInt(input.readLine());
             
             System.out.println("Enter memberID");
             memberID = Integer.parseInt(input.readLine());
             
             
-            System.out.println("Enter Phone number");
-           mPhoneNo = Integer.parseInt(input.readLine());
+            
             
              try {
                String inserty = "UPDATE Member SET mPhoneNo=?  WHERE memberID=?;";
                PreparedStatement pstmt = conn.prepareStatement(inserty);
                pstmt.setInt(1, mPhoneNo);
+               pstmt.setInt(2, memberID);
                
             }
             catch (java.sql.SQLException e2){
