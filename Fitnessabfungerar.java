@@ -2,6 +2,7 @@ import java.io.*;
 import java.sql.*;
 import org.sqlite.SQLiteConfig;
 import java.util.*;
+import java.util.Date;
 
 public class Fitnessabfungerar {
  
@@ -71,10 +72,11 @@ public class Fitnessabfungerar {
       
       while (fortsatt) {
       
-         System.out.println("P - Ny medlem");
-    	   System.out.println("U - Update member");
+         System.out.println("P - New member");
+    	   System.out.println("U - Update Phone number");
          System.out.println("N - New Address");
          System.out.println("C - Cancel membership");
+         System.out.println("R - Report on new members");
     	   System.out.println("L - Se tidrapporter for person");
     	   System.out.println("S - Se summa arbetade timmar");
     	   System.out.println("A - Se alla personer och deras tidsrapporter");
@@ -206,8 +208,8 @@ public class Fitnessabfungerar {
             System.out.println("Enter memberID");
             memberID = Integer.parseInt(input.readLine());
             
-            Calendar calendar = Calendar.getInstance(); 
-            endDate = calendar.add(Calendar.MONTH, 1); 
+            System.out.println("Enter endDate");
+            endDate = Integer.parseInt(input.readLine());
            
              try {
                String inserta = "UPDATE Member SET endDate=? WHERE memberID= ?" ;
@@ -217,12 +219,33 @@ public class Fitnessabfungerar {
                
                int rowAffected = pstmt.executeUpdate();
             
-        System.out.println("Membership will end: " + calendar.getTime()); 
                
             }
             catch (java.sql.SQLException e2){
                System.out.println(e2.getMessage());
             } 
+            break;
+            
+            case 'R': //report on new members
+            
+            Date date = new Date();
+            
+            try {
+               String select1 = "SELECT memberID FROM Member WHERE joinDate > Date()";
+
+               PreparedStatement pstmt = conn.prepareStatement(select1);
+               
+               ResultSet rs = pstmt.executeQuery();
+               while (rs.next()) {
+               System.out.println(rs.getString("memberID") + " " + rs.getString("dateOfBirth") + " " + rs.getString("joinDate"));
+               }
+               pstmt.close();
+               rs.close();
+
+            }
+            catch (java.sql.SQLException e3) {
+               System.out.println(e3.getMessage());
+            }
             break;
             case 'T':
             System.out.println("Ange Personnr (YYYYMMDD)");
