@@ -1,6 +1,7 @@
 import java.io.*;
 import java.sql.*;
 import org.sqlite.SQLiteConfig;
+import java.util.*;
 
 public class Fitnessabfungerar {
  
@@ -71,7 +72,9 @@ public class Fitnessabfungerar {
       while (fortsatt) {
       
          System.out.println("P - Ny medlem");
-    	   System.out.println("U - Ny tidrapport");
+    	   System.out.println("U - Update member");
+         System.out.println("N - New Address");
+         System.out.println("C - Cancel membership");
     	   System.out.println("L - Se tidrapporter for person");
     	   System.out.println("S - Se summa arbetade timmar");
     	   System.out.println("A - Se alla personer och deras tidsrapporter");
@@ -150,23 +153,21 @@ public class Fitnessabfungerar {
                 }
             }
             break;
-            
+  
             case 'U'://update phoneNO
+            System.out.println("Enter memberID");
            
             System.out.println("Enter Phone number");
-           mPhoneNo = Integer.parseInt(input.readLine());
-            
-            System.out.println("Enter memberID");
-            memberID = Integer.parseInt(input.readLine());
-            
-            
-            
+            mPhoneNo = Integer.parseInt(input.readLine());
             
              try {
-               String inserty = "UPDATE Member SET mPhoneNo=?  WHERE memberID=?;";
+               String inserty = "UPDATE Member SET mPhoneNo=? WHERE memberID= ?" ;
                PreparedStatement pstmt = conn.prepareStatement(inserty);
                pstmt.setInt(1, mPhoneNo);
                pstmt.setInt(2, memberID);
+               
+               int rowAffected = pstmt.executeUpdate();
+            System.out.println(String.format("Row affected %d", rowAffected));
                
             }
             catch (java.sql.SQLException e2){
@@ -174,7 +175,55 @@ public class Fitnessabfungerar {
             } 
             break;           
             
-   
+            case 'N'://update address
+            System.out.println("Enter memberID");
+            memberID = Integer.parseInt(input.readLine());
+           
+            System.out.println("Enter Address");
+            mAddress = input.readLine();
+            
+            System.out.println("Enter Zip Code");
+            mZipCode = Integer.parseInt(input.readLine());
+            
+             try {
+               String insertg = "UPDATE Member SET mAddress=?, mZipCode=? WHERE memberID= ?" ;
+               PreparedStatement pstmt = conn.prepareStatement(insertg);
+               pstmt.setString(1, mAddress);
+               pstmt.setInt(2, mZipCode);
+               pstmt.setInt(3, memberID);
+               
+               int rowAffected = pstmt.executeUpdate();
+            System.out.println(String.format("Row affected %d", rowAffected));
+               
+            }
+            catch (java.sql.SQLException e2){
+               System.out.println(e2.getMessage());
+            } 
+            break;
+            
+            case 'C'://cancel membership
+            
+            System.out.println("Enter memberID");
+            memberID = Integer.parseInt(input.readLine());
+            
+            Calendar calendar = Calendar.getInstance(); 
+            endDate = calendar.add(Calendar.MONTH, 1); 
+           
+             try {
+               String inserta = "UPDATE Member SET endDate=? WHERE memberID= ?" ;
+               PreparedStatement pstmt = conn.prepareStatement(inserta);
+               pstmt.setInt(1, endDate);
+               pstmt.setInt(2, memberID);
+               
+               int rowAffected = pstmt.executeUpdate();
+            
+        System.out.println("Membership will end: " + calendar.getTime()); 
+               
+            }
+            catch (java.sql.SQLException e2){
+               System.out.println(e2.getMessage());
+            } 
+            break;
             case 'T':
             System.out.println("Ange Personnr (YYYYMMDD)");
             int pnr2 = Integer.parseInt(input.readLine());
