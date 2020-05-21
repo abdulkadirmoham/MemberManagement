@@ -2,7 +2,6 @@ import java.io.*;
 import java.sql.*;
 import org.sqlite.SQLiteConfig;
 import java.util.*;
-import java.util.Date;
 
 public class Fitnessabfungerar {
  
@@ -73,14 +72,15 @@ public class Fitnessabfungerar {
       while (fortsatt) {
       
          System.out.println("P - New member");
-    	   System.out.println("U - Update Phone number");
-         System.out.println("N - New Address");
+    	   System.out.println("U - Update Phone number for member");
+         System.out.println("N - Update Address for member");
+         System.out.println("M - Update membership type");
          System.out.println("C - Cancel membership");
          System.out.println("R - Report on new members");
-    	   System.out.println("L - Se tidrapporter for person");
+    	 /*  System.out.println("L - Se tidrapporter for person");
     	   System.out.println("S - Se summa arbetade timmar");
-    	   System.out.println("A - Se alla personer och deras tidsrapporter");
-    	   System.out.println("Q - Avsluta");
+    	   System.out.println("A - Se alla personer och deras tidsrapporter"); */
+    	   System.out.println("Q - Quit");
          
          String val2 = input.readLine();
          char val = val2.charAt(0);   
@@ -193,6 +193,29 @@ public class Fitnessabfungerar {
                pstmt.setString(1, mAddress);
                pstmt.setInt(2, mZipCode);
                pstmt.setInt(3, memberID);
+               
+               int rowAffected = pstmt.executeUpdate();
+            System.out.println(String.format("Row affected %d", rowAffected));
+               
+            }
+            catch (java.sql.SQLException e2){
+               System.out.println(e2.getMessage());
+            } 
+            break;
+            
+            case 'M'://update membership type
+            System.out.println("Enter memberID");
+            memberID = Integer.parseInt(input.readLine());
+           
+            System.out.println("Enter desired membership type, choose between Gold, Silver and Bronze");
+            typeID = input.readLine();
+            
+            
+             try {
+               String insertg = "UPDATE Membership SET typeID=? WHERE memberID= ?" ;
+               PreparedStatement pstmt = conn.prepareStatement(insertg);
+               pstmt.setString(1, typeID);
+               pstmt.setInt(2, memberID);
                
                int rowAffected = pstmt.executeUpdate();
             System.out.println(String.format("Row affected %d", rowAffected));
@@ -326,8 +349,9 @@ public class Fitnessabfungerar {
             }
             break;
      
+            
             case 'Q':
-            System.out.println("avslutar program");
+            System.out.println("exit program");
             fortsatt = false;
             break;
 
@@ -340,3 +364,82 @@ public class Fitnessabfungerar {
    } 
 }
    
+            
+       /*     GAMMAL KOD FRÅN TIG058
+            case 'T':
+            System.out.println("Ange Personnr (YYYYMMDD)");
+            int pnr2 = Integer.parseInt(input.readLine());
+            System.out.println("Ange Datum");
+            String Datum = input.readLine();
+            System.out.println("Ange Antal Timmar");
+            String AntalTimmar = input.readLine();
+            try {
+               String inserth = "INSERT INTO Tidbok(PNr, Datum, AntalTimmar) VALUES(?,?,?)";
+               PreparedStatement pstmt = conn.prepareStatement(inserth);
+               pstmt.setInt(1, pnr2);
+               pstmt.setString(2, Datum);
+               pstmt.setString(3, AntalTimmar);
+               pstmt.executeUpdate();
+               pstmt.close();
+            }
+            catch (java.sql.SQLException e2){
+               System.out.println(e2.getMessage());
+            }
+            break;
+
+            case 'L':
+            System.out.println("Ange Personnr (YYYYMMDD)");
+            int pnr4 = Integer.parseInt(input.readLine());
+
+            try {
+               String select1 = "select Tidbok.PNr, Tidbok.Datum, Tidbok.AntalTimmar from Tidbok where PNr = ? Order by Datum";
+               PreparedStatement pstmt = conn.prepareStatement(select1);
+               pstmt.setInt(1, pnr4);
+               ResultSet rs = pstmt.executeQuery();
+               while (rs.next()) {
+               System.out.println(rs.getString("PNr") + " " + rs.getString("Datum") + " " + rs.getString("Antaltimmar"));
+               }
+               pstmt.close();
+               rs.close();
+
+            }
+            catch (java.sql.SQLException e3) {
+               System.out.println(e3.getMessage());
+            }
+            break;
+
+            case 'S':
+               System.out.println("Ange Personnr (YYYYMMDD)");
+               int pnr3 = Integer.parseInt(input.readLine());
+               try {
+               String select1 = "select Tidbok.PNr, sum(Tidbok.AntalTimmar) from Tidbok where PNr = ?";
+               PreparedStatement pstmt = conn.prepareStatement(select1);
+               pstmt.setInt(1, pnr3);
+               ResultSet rs = pstmt.executeQuery();
+               System.out.println(rs.getString("PNr") + " " + rs.getString("sum(Tidbok.AntalTimmar)"));
+               pstmt.close();
+               rs.close();
+               
+            }
+            catch (java.sql.SQLException e4) {
+               System.out.println(e4);
+            }
+            break;
+            case 'A':
+
+            try {
+            
+               String select1 = "select Person.PNr, FNamn, ENamn, Datum, AntalTimmar from Person left outer join Tidbok on Person.PNr=Tidbok.PNr";
+               Statement stmt = conn.createStatement();
+               ResultSet rs = stmt.executeQuery(select1);
+               while (rs.next()) {
+                  System.out.println(rs.getString("PNr") + " " + rs.getString("FNamn") + " " + rs.getString("ENamn") + " " + rs.getString("Datum") + " " + rs.getString("AntalTimmar"));
+               }
+               stmt.close();
+               rs.close();
+               
+            }
+            catch (java.sql.SQLException e5) {
+               System.out.println(e5);
+            }
+            break; */
