@@ -228,13 +228,13 @@ public class Fitnessabfungerar {
             
             case 'R': //report on new members
             
-            Date date = new Date();
+            System.out.println("Enter join date in format YYYYMMDD");
+            joinDate = Integer.parseInt(input.readLine());
             
             try {
-               String select1 = "SELECT memberID FROM Member WHERE joinDate > Date()";
-
-               PreparedStatement pstmt = conn.prepareStatement(select1);
-               
+               String selectg = "select * FROM MEMBER WHERE joinDate=?";
+               PreparedStatement pstmt = conn.prepareStatement(selectg);
+               pstmt.setInt(1, joinDate);
                ResultSet rs = pstmt.executeQuery();
                while (rs.next()) {
                System.out.println(rs.getString("memberID") + " " + rs.getString("dateOfBirth") + " " + rs.getString("joinDate"));
@@ -247,6 +247,7 @@ public class Fitnessabfungerar {
                System.out.println(e3.getMessage());
             }
             break;
+            
             case 'T':
             System.out.println("Ange Personnr (YYYYMMDD)");
             int pnr2 = Integer.parseInt(input.readLine());
