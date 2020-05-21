@@ -73,6 +73,7 @@ public class Fitnessabfungerar {
       
          System.out.println("P - New member");
     	   System.out.println("U - Update Phone number for member");
+         System.out.println("G - Update Email for member");
          System.out.println("N - Update Address for member");
          System.out.println("M - Update membership type");
          System.out.println("C - Cancel membership");
@@ -154,6 +155,28 @@ public class Fitnessabfungerar {
                 System.out.println(e1.getMessage());         
                 }
             }
+            break;
+            
+              case 'G'://update email
+            System.out.println("Enter memberID");
+            memberID = Integer.parseInt(input.readLine());
+           
+            System.out.println("Enter Email");
+            mEmail = input.readLine();
+            
+             try {
+               String insertz = "UPDATE Member SET mEmail=? WHERE memberID= ?" ;
+               PreparedStatement pstmt = conn.prepareStatement(insertz);
+               pstmt.setString(1, mEmail);
+               pstmt.setInt(2, memberID);
+               
+               int rowAffected = pstmt.executeUpdate();
+            System.out.println(String.format("Row affected %d", rowAffected));
+               
+            }
+            catch (java.sql.SQLException e2){
+               System.out.println(e2.getMessage());
+            } 
             break;
   
             case 'U'://update phoneNO
