@@ -207,7 +207,7 @@ public class Fitnessabfungerar {
             System.out.println("Enter memberID");
             memberID = Integer.parseInt(input.readLine());
            
-            System.out.println("Enter desired membership type, choose between Gold, Silver and Bronze");
+            System.out.println("Enter desired membership type \nChoose between Gold, Silver and Bronze");
             typeID = input.readLine();
             
             
