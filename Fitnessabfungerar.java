@@ -85,11 +85,10 @@ public class Fitnessabfungerar {
     	   System.out.println("A - Se alla personer och deras tidsrapporter"); */
             System.out.println("Q - Quit");
 
-            String val2 = input.readLine();
-            char val = val2.charAt(0);
+           String val = input.readLine();
 
             switch (val) {
-                case 'P':
+                case "P":
 
                     System.out.println("Enter Date of birth (YYYYMMDD)");
                     int dateOfBirth = Integer.parseInt(input.readLine());
@@ -156,7 +155,7 @@ public class Fitnessabfungerar {
                     }
                     break;
 
-                case 'G'://update email
+                case "G"://update email
                     System.out.println("Enter memberID");
                     memberID = Integer.parseInt(input.readLine());
 
@@ -177,7 +176,7 @@ public class Fitnessabfungerar {
                     }
                     break;
 
-                case 'U'://update phoneNO
+                case "U"://update phoneNO
                     System.out.println("Enter memberID");
 
                     System.out.println("Enter Phone number");
@@ -197,7 +196,7 @@ public class Fitnessabfungerar {
                     }
                     break;
 
-                case 'N'://update address
+                case "N"://update address
                     System.out.println("Enter memberID");
                     memberID = Integer.parseInt(input.readLine());
 
@@ -222,7 +221,7 @@ public class Fitnessabfungerar {
                     }
                     break;
 
-                case 'B':
+                case "B":
 
                     System.out.println("Enter memberID");
                     int memberID = Integer.parseInt(input.readLine());
@@ -258,7 +257,7 @@ public class Fitnessabfungerar {
                     }
                     break;
 
-                case 'M'://update membership type
+                case "M"://update membership type
                     System.out.println("Enter memberID");
                     memberID = Integer.parseInt(input.readLine());
 
@@ -280,7 +279,7 @@ public class Fitnessabfungerar {
                     }
                     break;
 
-                case 'C'://cancel membership
+                case "C"://cancel membership
 
                     System.out.println("Enter memberID");
                     memberID = Integer.parseInt(input.readLine());
@@ -302,7 +301,7 @@ public class Fitnessabfungerar {
                     }
                     break;
 
-                case 'R': //report on new members
+                case "R": //report on new members
 
                     System.out.println("Enter join date in format YYYYMMDD");
                     joinDate = Integer.parseInt(input.readLine());
@@ -323,7 +322,7 @@ public class Fitnessabfungerar {
                     }
                     break;
 
-                case 'T':
+                case "T":
                     System.out.println("Ange Personnr (YYYYMMDD)");
                     int pnr2 = Integer.parseInt(input.readLine());
                     System.out.println("Ange Datum");
@@ -343,7 +342,7 @@ public class Fitnessabfungerar {
                     }
                     break;
 
-                case 'L':
+                case "L":
                     System.out.println("Ange Personnr (YYYYMMDD)");
                     int pnr4 = Integer.parseInt(input.readLine());
 
@@ -363,7 +362,7 @@ public class Fitnessabfungerar {
                     }
                     break;
 
-                case 'S':
+                case "S":
                     System.out.println("Ange Personnr (YYYYMMDD)");
                     int pnr3 = Integer.parseInt(input.readLine());
                     try {
@@ -379,7 +378,7 @@ public class Fitnessabfungerar {
                         System.out.println(e4);
                     }
                     break;
-                case 'A':
+                case "A":
 
                     try {
 
@@ -398,7 +397,7 @@ public class Fitnessabfungerar {
                     break;
 
 
-                case 'Q':
+                case "Q":
                     System.out.println("exit program");
                     fortsatt = false;
                     break;
