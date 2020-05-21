@@ -48,7 +48,7 @@ public class courses {
  
    // Sokvog till SQLite-databas. OBS! andra sokvag sa att den pekar ut din databas
    public static final String DB_URL = "jdbc:sqlite:C:/programmering/membership_course_db4.2.db";
-   // Namnet på den driver som används av java för attprata med SQLite
+   // Namnet pa den driver som anvands av java for attprata med SQLite
    public static final String DRIVER = "org.sqlite.JDBC";  
 
    public static void main(String[] args) throws IOException {
