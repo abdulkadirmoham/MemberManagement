@@ -255,7 +255,7 @@ public class Fitnessabfungerar {
             joinDate = Integer.parseInt(input.readLine());
             
             try {
-               String selectg = "select * FROM MEMBER WHERE joinDate > ?";
+               String selectg = "select * FROM MEMBER WHERE joinDate >= ?";
                PreparedStatement pstmt = conn.prepareStatement(selectg);
                pstmt.setInt(1, joinDate);
                ResultSet rs = pstmt.executeQuery();
