@@ -232,12 +232,12 @@ public class Fitnessabfungerar {
             joinDate = Integer.parseInt(input.readLine());
             
             try {
-               String selectg = "select * FROM MEMBER WHERE joinDate=?";
+               String selectg = "select * FROM MEMBER WHERE joinDate > ?";
                PreparedStatement pstmt = conn.prepareStatement(selectg);
                pstmt.setInt(1, joinDate);
                ResultSet rs = pstmt.executeQuery();
                while (rs.next()) {
-               System.out.println(rs.getString("memberID") + " " + rs.getString("dateOfBirth") + " " + rs.getString("joinDate"));
+               System.out.println(rs.getInt("memberID") + " " + rs.getInt("dateOfBirth") + " " + rs.getString("mFirstName") + " " + rs.getString("mLastName") + " " + rs.getString("mAddress") + " " + rs.getInt("mZipCode") + " " + rs.getInt("mPhoneNo") + " " + rs.getString("mEmail") + " " + rs.getInt("joinDate") + " " + rs.getInt("endDate"));
                }
                pstmt.close();
                rs.close();
