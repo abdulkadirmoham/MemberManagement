@@ -24,7 +24,7 @@ public class courses {
       static int facilityID;
       static String fAddress;
       static int fPhone;
-      static String FEmail;
+      static String fEmail;
       //Membership type
       static String typeID;
       static int price;
