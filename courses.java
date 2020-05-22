@@ -123,20 +123,21 @@ public class courses {
                  catch (java.sql.SQLException e2){
                      System.out.println(e2.getMessage());
                  }
-
-                 System.out.println("Enter SessionID");
-                 String sessionID = input.readLine();
-
-                 try {
-                     String inserth = "INSERT INTO CourseSessionAttendance(memberID, sessionID) VALUES(?,?)";
-                     PreparedStatement pstmt = conn.prepareStatement(inserth);
-                     pstmt.setInt(1, memberID);
-                     pstmt.setString(2, sessionID);
-                     pstmt.executeUpdate();
-                     pstmt.close();
-                 }
-                 catch (java.sql.SQLException e2){
-                     System.out.println(e2.getMessage());
-                 }
                  break;
-         }
+                     
+                 case "Cd": //create course
+                    
+                    System.out.println("Enter course name");
+                    courseName = input.readLine();
+                    
+                   
+                    try {
+                        String inser = "INSERT INTO Course(courseName) VALUES(?)";
+                        PreparedStatement pstmt = conn.prepareStatement(inser);
+                        pstmt.setString(1, courseName);
+                        pstmt.executeUpdate();
+                        pstmt.close();
+                    } catch (java.sql.SQLException e2) {
+                        System.out.println(e2.getMessage());
+                    }
+                    
