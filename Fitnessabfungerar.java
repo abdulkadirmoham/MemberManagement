@@ -1,6 +1,6 @@
 import java.io.*;
 import java.sql.*;
-
+import java.time.LocalDate;
 import org.sqlite.SQLiteConfig;
 
 import java.util.*;
@@ -41,6 +41,20 @@ public class Fitnessabfungerar {
     static String databas;
     static PreparedStatement send;
     static Connection conn = null;
+    static String str;
+    static int getTodaysdate(){
+               
+               String str = LocalDate.now().toString();
+               str = str.replace( "-" , "");
+               return Integer.parseInt(str);
+               }
+     static int getdateOnemonth(){
+               LocalDateTime sameDayNextMonth = today.plusMonths(1); 
+               String str = LocalDate.now().toString();
+               str = str.replace( "-" , "");
+               return Integer.parseInt(str);
+               }
+
 
 
     // Sokvog till SQLite-databas. OBS! andra sokvag sa att den pekar ut din databas
@@ -84,10 +98,14 @@ public class Fitnessabfungerar {
     	   System.out.println("S - Se summa arbetade timmar");
     	   System.out.println("A - Se alla personer och deras tidsrapporter"); */
             System.out.println("Q - Quit");
+            
+           
 
            String val = input.readLine();
 
             switch (val) {
+            
+             
                 case "P":
 
                     System.out.println("Enter Date of birth (YYYYMMDD)");
@@ -109,10 +127,9 @@ public class Fitnessabfungerar {
                     String mAddress = input.readLine();
 
                     System.out.println("Enter Zipcode");
-                    int mZipCode = Integer.parseInt(input.readLine());
-
-                    System.out.println("Enter Join date");
-                    int joinDate = Integer.parseInt(input.readLine());
+                    int mZipCode = Integer.parseInt(input.readLine());                   
+                                   
+                       
 
                     System.out.println("Enter End date");
                     int endDate = Integer.parseInt(input.readLine());
@@ -128,7 +145,7 @@ public class Fitnessabfungerar {
                             pstmt.setInt(5, mZipCode);
                             pstmt.setInt(6, mPhoneNo);
                             pstmt.setString(7, mEmail);
-                            pstmt.setInt(8, joinDate);
+                            pstmt.setInt(8, getTodaysdate());
                             pstmt.executeUpdate();
                             pstmt.close();
                         } catch (java.sql.SQLException e1) {
@@ -283,14 +300,16 @@ public class Fitnessabfungerar {
 
                     System.out.println("Enter memberID");
                     memberID = Integer.parseInt(input.readLine());
+                    
+                    
 
-                    System.out.println("Enter endDate");
-                    endDate = Integer.parseInt(input.readLine());
+                    /*System.out.println("Enter endDate");
+                    endDate = Integer.parseInt(input.readLine());*/
 
                     try {
                         String inserta = "UPDATE Member SET endDate=? WHERE memberID= ?";
                         PreparedStatement pstmt = conn.prepareStatement(inserta);
-                        pstmt.setInt(1, endDate);
+                        pstmt.setInt(1, getTodaysdate());
                         pstmt.setInt(2, memberID);
 
                         int rowAffected = pstmt.executeUpdate();
