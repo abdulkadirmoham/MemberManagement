@@ -35,11 +35,21 @@ public class courses {
       static String position;
       static int ePhoneNo;
       static String eEMail;
-      //Enrollment
-    static int couSesDate;
-    static int couSesTime;
-    static int sessionID;
-    static int currentDate;
+     //Enrollment
+      static int currentDate;
+    //Course Session
+      static int sessionID;
+      static int capacity;
+      static int couSesDate;
+      static String couSesTime;
+      static int roomNo;
+     //Course
+     static int courseID;
+    static String courseName;
+     //Schedule
+    static int scheduleDate;
+    static String scheduleTime;
+    
       static String databas;
       static PreparedStatement send; 
       static Connection conn = null;

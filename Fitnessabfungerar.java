@@ -37,6 +37,9 @@ public class Fitnessabfungerar {
     static String position;
     static int ePhoneNo;
     static String eEMail;
+    //Schedule
+    static int scheduleDate;
+    static String scheduleTime;
 
     static String databas;
     static PreparedStatement send;
