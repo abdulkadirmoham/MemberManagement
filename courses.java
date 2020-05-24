@@ -85,24 +85,17 @@ public class courses {
       
       while (fortsatt) {
       
-         System.out.println("P - New member");
-         System.out.println("U - Update Phone number for member");
-         System.out.println("G - Update Email for member");
-         System.out.println("N - Update Address for member");
-         System.out.println("M - Update membership type");
-         System.pit.println("B - Book course")
-         System.out.println("C - Cancel membership");
-         System.out.println("R - Report on new members");
-    	 /*  System.out.println("L - Se tidrapporter for person");
-    	   System.out.println("S - Se summa arbetade timmar");
-    	   System.out.println("A - Se alla personer och deras tidsrapporter"); */
+         System.out.println("BC - Book course");
+         System.out.println("CC - Create course");
+         System.out.println("DC - Delete course");
+         System.out.println("CM - Cancel course for member");
+         System.out.println("SB - See booked courses");
     	   System.out.println("Q - Quit");
          
-         String val2 = input.readLine();
-         char val = val2.charAt(0);   
+         String val = input.readLine();
          
          switch (val) {
-             case 'B':
+             case "BC": // Book course
 
                  System.out.println("Enter memberID");
                  int memberID = Integer.parseInt(input.readLine());
@@ -125,7 +118,7 @@ public class courses {
                  }
                  break;
                      
-                 case "Cd": //create course
+                 case "CC": //create course
                     
                     System.out.println("Enter course name");
                     courseName = input.readLine();
@@ -140,4 +133,40 @@ public class courses {
                     } catch (java.sql.SQLException e2) {
                         System.out.println(e2.getMessage());
                     }
+                  break;
+                  
+           case "DC": //Delete course
+           
+            System.out.println("Enter courseID"); 
+            courseID = Integer.parseInt(input.readLine());
+            
+            try {
+               String delete = "DELETE FROM Course WHERE courseID=?";
+               PreparedStatement pstmt = conn.prepareStatement(delete);
+               pstmt.setInt(1, courseID);
+            
+            int rowAffected = pstmt.executeUpdate();
+            //System.out.println(String.format("Row affected %d", rowAffected));
+            System.out.println("Course " + courseID + " deleted successfully");
+            
+            }
+            catch (java.sql.SQLException e2){
+            System.out.println(e2.getMessage());
+            
+            } 
+            break;
+                 
+           case "Q":
+            System.out.println("exit program");
+            fortsatt = false;
+            break;
+
+            default:
+            System.out.println("fel val");
+            break;
+          
+         }
+      }
+   } 
+}
                     
