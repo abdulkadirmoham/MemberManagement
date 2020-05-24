@@ -157,12 +157,12 @@ public class courses {
             break;
                  
            case "Q":
-            System.out.println("exit program");
+            System.out.println("Exit program");
             fortsatt = false;
             break;
 
             default:
-            System.out.println("fel val");
+            System.out.println("Wrong choice");
             break;
           
          }
