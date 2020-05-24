@@ -155,6 +155,30 @@ public class courses {
             
             } 
             break;
+            
+            case "SB": // See booked courses for member
+            
+            System.out.println ("Enter your member ID"); 
+            memberID = Integer.parseInt(input.readLine());
+            
+            try {
+            String seeBookings = "SELECT Course.courseName, CourseSession.couSesDate FROM Course, CourseSession, CourseEnrollment WHERE Course.courseID = CourseEnrollment.courseID AND Course.courseID = CourseSession.courseID AND memberID = ?";
+            PreparedStatement pstmt = conn.prepareStatement(seeBookings);
+            pstmt.setInt(1, memberID);
+            ResultSet rs = pstmt.executeQuery();
+            System.out.println("Your booked courses: " + "\n" + "Course name" + "   " + "Course date");
+             
+              while (rs.next()) {
+               System.out.println (rs.getString("courseName") + "          " + rs.getInt("couSesDate"));
+              }
+               pstmt.close();
+               rs.close();
+
+            }
+            catch (java.sql.SQLException e3) {
+               System.out.println(e3.getMessage());
+            }
+            break;
                  
            case "Q":
             System.out.println("Exit program");
