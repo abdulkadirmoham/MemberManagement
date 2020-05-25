@@ -179,6 +179,28 @@ public class courses {
                System.out.println(e3.getMessage());
             }
             break;
+            
+            case "RM": // on course attendance
+
+                    System.out.println("Enter sessionID");
+                    int sessionID = Integer.parseInt(input.readLine());
+
+                    try {
+                        String selef = "select count(memberID) from CourseEnrollment where sessionID = ?";
+                        PreparedStatement pstmt = conn.prepareStatement(selef);
+                        pstmt.setInt(1, sessionID);
+                        ResultSet rs = pstmt.executeQuery();
+                        while (rs.next()) {
+                            System.out.println(rs.getInt("count(memberID)"));
+                        }
+                        pstmt.close();
+                        rs.close();
+
+                    } catch (java.sql.SQLException e3) {
+                        System.out.println(e3.getMessage());
+                    }
+                    break;
+
                  
            case "Q":
             System.out.println("Exit program");

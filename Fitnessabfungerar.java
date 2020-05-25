@@ -40,6 +40,8 @@ public class Fitnessabfungerar {
     //Schedule
     static int scheduleDate;
     static String scheduleTime;
+    static int sessionID;
+    
 
     static String databas;
     static PreparedStatement send;
@@ -67,7 +69,7 @@ public class Fitnessabfungerar {
 
 
     // Sokvog till SQLite-databas. OBS! andra sokvag sa att den pekar ut din databas
-    public static final String DB_URL = "jdbc:sqlite:C:/programmering/membership_course_db4.3.db";
+    public static final String DB_URL = "jdbc:sqlite:C:/programmering/membership_course_db4.4.db";
     // Namnet på den driver som används av java för attprata med SQLite
     public static final String DRIVER = "org.sqlite.JDBC";
 
@@ -103,6 +105,8 @@ public class Fitnessabfungerar {
             System.out.println("C - Cancel membership");
             System.out.println("B - Book course");
             System.out.println("R - Report on new members");
+            System.out.println("RM - Report on course attendance");
+            
     	 /*  System.out.println("L - Se tidrapporter for person");
     	   System.out.println("S - Se summa arbetade timmar");
     	   System.out.println("A - Se alla personer och deras tidsrapporter"); */
@@ -269,14 +273,13 @@ public class Fitnessabfungerar {
                         System.out.println(e2.getMessage());
                     }
 
-                    System.out.println("Enter SessionID");
-                    String sessionID = input.readLine();
+                    
 
                     try {
                         String inserth = "INSERT INTO CourseSessionAttendance(memberID, sessionID) VALUES(?,?)";
                         PreparedStatement pstmt = conn.prepareStatement(inserth);
                         pstmt.setInt(1, memberID);
-                        pstmt.setString(2, sessionID);
+                        pstmt.setInt(2, sessionID);
                         pstmt.executeUpdate();
                         pstmt.close();
                     } catch (java.sql.SQLException e2) {
@@ -340,7 +343,9 @@ public class Fitnessabfungerar {
                         PreparedStatement pstmt = conn.prepareStatement(selectg);
                         pstmt.setInt(1, joinDate);
                         ResultSet rs = pstmt.executeQuery();
+                        System.out.println("memberID, date of birth, first name, last name, address, Zip code, phone number, email, join date, end date");
                         while (rs.next()) {
+                            
                             System.out.println(rs.getInt("memberID") + " " + rs.getInt("dateOfBirth") + " " + rs.getString("mFirstName") + " " + rs.getString("mLastName") + " " + rs.getString("mAddress") + " " + rs.getInt("mZipCode") + " " + rs.getInt("mPhoneNo") + " " + rs.getString("mEmail") + " " + rs.getInt("joinDate") + " " + rs.getString("endDate"));
                         }
                         pstmt.close();
@@ -424,7 +429,8 @@ public class Fitnessabfungerar {
                         System.out.println(e5);
                     }
                     break;
-
+                    
+                    
 
                 case "Q":
                     System.out.println("exit program");
