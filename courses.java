@@ -90,6 +90,7 @@ public class courses {
          System.out.println("DC - Delete course");
          System.out.println("CM - Cancel course for member");
          System.out.println("SB - See booked courses");
+         System.out.println("RM - Create report on number of visits of specific course"); 
     	   System.out.println("Q - Quit");
          
          String val = input.readLine();
@@ -156,13 +157,39 @@ public class courses {
             } 
             break;
             
+            case "CM": //Cancel course for member
+            
+            System.out.println("Enter your member ID"); 
+            memberID = Integer.parseInt (input.readLine());
+            
+            System.out.println("Enter session ID you want to cancel your spot in"); 
+            sessionID = Integer.parseInt (input.readLine());
+            
+            try {
+               String cancel = "DELETE FROM CourseEnrollment WHERE sessionID=? AND memberID=?";
+               PreparedStatement pstmt = conn.prepareStatement(cancel);
+               pstmt.setInt(1, sessionID);
+               pstmt.setInt(2, memberID);
+            
+            int rowAffected = pstmt.executeUpdate();
+            //System.out.println(String.format("Row affected %d", rowAffected));
+            System.out.println("Course session " + sessionID + " cancelled successfully");
+            
+            }
+            catch (java.sql.SQLException e2){
+            System.out.println(e2.getMessage());
+            
+            } 
+            break;
+
+            
             case "SB": // See booked courses for member
             
             System.out.println ("Enter your member ID"); 
             memberID = Integer.parseInt(input.readLine());
             
             try {
-            String seeBookings = "SELECT Course.courseName, CourseSession.couSesDate FROM Course, CourseSession, CourseEnrollment WHERE Course.courseID = CourseEnrollment.courseID AND Course.courseID = CourseSession.courseID AND memberID = ?";
+            String seeBookings = "SELECT Course.courseName, CourseSession.couSesDate FROM Course, CourseSession, CourseEnrollment WHERE CourseSession.sessionID = CourseEnrollment.sessionID AND CourseSession.courseID = Course.courseID AND memberID = ?";             
             PreparedStatement pstmt = conn.prepareStatement(seeBookings);
             pstmt.setInt(1, memberID);
             ResultSet rs = pstmt.executeQuery();
