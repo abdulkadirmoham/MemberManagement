@@ -51,17 +51,19 @@ public class Fitnessabfungerar {
                str = str.replace( "-" , "");
                return Integer.parseInt(str);
                }
-     static int getdateOnemonth(){
-               LocalDateTime sameDayNextMonth = today.plusMonths(1); 
-               String str = LocalDate.now().toString();
-               str = str.replace( "-" , "");
-               return Integer.parseInt(str);
-               }
+   static int addOneMonth()  {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, 1);
+        String gru = cal.getTime().toString();
+        gru = gru.replace( "-" , "");       
+        return Integer.parseInt(gru);
+}
+
 
 
 
     // Sokvog till SQLite-databas. OBS! andra sokvag sa att den pekar ut din databas
-    public static final String DB_URL = "jdbc:sqlite:C:/programmering/membership_course_db4.2.db";
+    public static final String DB_URL = "jdbc:sqlite:C:/programmering/membership_course_db4.3.db";
     // Namnet på den driver som används av java för attprata med SQLite
     public static final String DRIVER = "org.sqlite.JDBC";
 
@@ -312,7 +314,7 @@ public class Fitnessabfungerar {
                     try {
                         String inserta = "UPDATE Member SET endDate=? WHERE memberID= ?";
                         PreparedStatement pstmt = conn.prepareStatement(inserta);
-                        pstmt.setInt(1, getTodaysdate());
+                        pstmt.setInt(1, addOneMonth());
                         pstmt.setInt(2, memberID);
 
                         int rowAffected = pstmt.executeUpdate();
