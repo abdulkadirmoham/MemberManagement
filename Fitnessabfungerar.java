@@ -283,7 +283,7 @@ public class Fitnessabfungerar {
                         System.out.println(e2.getMessage());
                     }
                     break;
-
+ 
                 case "M"://update membership type
                     System.out.println("Enter memberID");
                     memberID = Integer.parseInt(input.readLine());
