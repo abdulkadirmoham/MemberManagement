@@ -2,7 +2,7 @@ import java.io.*;
 import java.sql.*;
 import java.time.LocalDate;
 import org.sqlite.SQLiteConfig;
-
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Fitnessabfungerar {
@@ -14,7 +14,7 @@ public class Fitnessabfungerar {
     static int mZipCode;
     static int mPhoneNo;
     static int joinDate;
-    static int endDate;
+    static String endDate;
     static String mEmail;
 
     // Payment
@@ -51,12 +51,16 @@ public class Fitnessabfungerar {
                str = str.replace( "-" , "");
                return Integer.parseInt(str);
                }
-   static int addOneMonth()  {
+    static String addOneMonth()  {
+        String DATE_FORMAT = "yyyyMMdd";
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.MONTH, 1);
-        String gru = cal.getTime().toString();
-        gru = gru.replace( "-" , "");       
-        return Integer.parseInt(gru);
+        
+        
+             
+        return sdf.format(cal.getTime());
+        
 }
 
 
@@ -137,8 +141,9 @@ public class Fitnessabfungerar {
                        
 
                     System.out.println("Enter End date");
-                    int endDate = Integer.parseInt(input.readLine());
-                    if (endDate == 0) {
+                    endDate = input.readLine();
+                    
+                    if (endDate.equals(0)) {
 
                         try {
                             String insertp = "INSERT INTO Member(dateOfBirth, mFirstName, mLastName, mAddress, mZipCode, mPhoneNo, mEmail, joinDate) VALUES(?,?,?,?,?,?,?,?)";
@@ -168,7 +173,7 @@ public class Fitnessabfungerar {
                             pstmt.setInt(6, mPhoneNo);
                             pstmt.setString(7, mEmail);
                             pstmt.setInt(8, joinDate);
-                            pstmt.setInt(9, endDate);
+                            pstmt.setString(9, endDate);
                             pstmt.executeUpdate();
                             pstmt.close();
                         } catch (java.sql.SQLException e1) {
@@ -314,7 +319,7 @@ public class Fitnessabfungerar {
                     try {
                         String inserta = "UPDATE Member SET endDate=? WHERE memberID= ?";
                         PreparedStatement pstmt = conn.prepareStatement(inserta);
-                        pstmt.setInt(1, addOneMonth());
+                        pstmt.setString(1, addOneMonth());
                         pstmt.setInt(2, memberID);
 
                         int rowAffected = pstmt.executeUpdate();
@@ -336,7 +341,7 @@ public class Fitnessabfungerar {
                         pstmt.setInt(1, joinDate);
                         ResultSet rs = pstmt.executeQuery();
                         while (rs.next()) {
-                            System.out.println(rs.getInt("memberID") + " " + rs.getInt("dateOfBirth") + " " + rs.getString("mFirstName") + " " + rs.getString("mLastName") + " " + rs.getString("mAddress") + " " + rs.getInt("mZipCode") + " " + rs.getInt("mPhoneNo") + " " + rs.getString("mEmail") + " " + rs.getInt("joinDate") + " " + rs.getInt("endDate"));
+                            System.out.println(rs.getInt("memberID") + " " + rs.getInt("dateOfBirth") + " " + rs.getString("mFirstName") + " " + rs.getString("mLastName") + " " + rs.getString("mAddress") + " " + rs.getInt("mZipCode") + " " + rs.getInt("mPhoneNo") + " " + rs.getString("mEmail") + " " + rs.getInt("joinDate") + " " + rs.getString("endDate"));
                         }
                         pstmt.close();
                         rs.close();
