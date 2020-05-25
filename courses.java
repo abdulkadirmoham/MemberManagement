@@ -11,15 +11,15 @@ public class courses {
       static String mAddress;
       static int mZipCode;
       static int mPhoneNo;
-      static int joinDate;
-      static int endDate; 
+      static String joinDate;
+      static String endDate; 
       static String mEmail;
    
       // Payment
       static int memberID;
       static int paymentID;
       static String paymethod;
-      static int paymentDate;
+      static String paymentDate;
        // Facility
       static int facilityID;
       static String fAddress;
@@ -40,14 +40,14 @@ public class courses {
     //Course Session
       static int sessionID;
       static int capacity;
-      static int couSesDate;
+      static String couSesDate;
       static String couSesTime;
       static int roomNo;
      //Course
      static int courseID;
     static String courseName;
      //Schedule
-    static int scheduleDate;
+    static String scheduleDate;
     static String scheduleTime;
     
       static String databas;
@@ -57,7 +57,7 @@ public class courses {
    
  
    // Sokvog till SQLite-databas. OBS! andra sokvag sa att den pekar ut din databas
-   public static final String DB_URL = "jdbc:sqlite:C:/programmering/membership_course_db4.2.db";
+   public static final String DB_URL = "jdbc:sqlite:C:/programmering/membership_course_db4.4.db";
    // Namnet pa den driver som anvands av java for attprata med SQLite
    public static final String DRIVER = "org.sqlite.JDBC";  
 
