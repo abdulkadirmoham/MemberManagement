@@ -11,7 +11,7 @@ public class courses {
       static String mAddress;
       static int mZipCode;
       static int mPhoneNo;
-      static String joinDate;
+      static int joinDate;
       static String endDate; 
       static String mEmail;
    
@@ -40,14 +40,14 @@ public class courses {
     //Course Session
       static int sessionID;
       static int capacity;
-      static String couSesDate;
+      static int couSesDate;
       static String couSesTime;
       static int roomNo;
      //Course
      static int courseID;
     static String courseName;
      //Schedule
-    static String scheduleDate;
+    static int scheduleDate;
     static String scheduleTime;
     
       static String databas;
