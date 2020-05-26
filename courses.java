@@ -53,9 +53,6 @@ public class courses {
      //Course
      static int courseID;
     static String courseName;
-     //Schedule
-    static int scheduleDate;
-    static String scheduleTime;
     
       static String databas;
       static PreparedStatement send; 
