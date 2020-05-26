@@ -69,7 +69,7 @@ public class Fitnessabfungerar {
 
 
     // Sokvog till SQLite-databas. OBS! andra sokvag sa att den pekar ut din databas
-    public static final String DB_URL = "jdbc:sqlite:C:/programmering/membership_course_db4.4.db";
+    public static final String DB_URL = "jdbc:sqlite:/Users/erikhallgren/Desktop/MemberManagement/membership_course_db4.3.db";
     // Namnet på den driver som används av java för attprata med SQLite
     public static final String DRIVER = "org.sqlite.JDBC";
 
@@ -106,7 +106,7 @@ public class Fitnessabfungerar {
             System.out.println("B - Book course");
             System.out.println("R - Report on new members");
             System.out.println("RM - Report on course attendance");
-            
+            System.out.println("NE - Add new employee");
     	 /*  System.out.println("L - Se tidrapporter for person");
     	   System.out.println("S - Se summa arbetade timmar");
     	   System.out.println("A - Se alla personer och deras tidsrapporter"); */
@@ -429,6 +429,48 @@ public class Fitnessabfungerar {
                         System.out.println(e5);
                     }
                     break;
+               case "NE":
+
+          System.out.println("Enter facilityID");
+            int facilityID = Integer.parseInt(input.readLine());
+            
+            System.out.println("Enter eFirst name");
+            String eFirstName = input.readLine();
+            
+            System.out.println("Enter eLast name");
+            String eLastName = input.readLine();
+            
+            System.out.println("Enter position");
+            String position = input.readLine();
+            
+            System.out.println("Enter ePhone number");
+            ePhoneNo = Integer.parseInt(input.readLine());
+                        
+            System.out.println("Enter eEmail");
+            String eEmail = input.readLine();
+                        
+                       
+               try {
+                  String insertp = "INSERT INTO Employee (facilityID, eFirstName, eLastName, position, ePhoneNo, eEmail) VALUES (?,?,?,?,?,?);";
+                  PreparedStatement pstmt = conn.prepareStatement(insertp);
+                  pstmt.setInt(1, facilityID);
+                  pstmt.setString(2, eFirstName);
+                  pstmt.setString(3, eLastName);
+                  pstmt.setString(4, position);
+                  pstmt.setInt(5, ePhoneNo);
+                  pstmt.setString(6, eEmail);
+                           
+                  pstmt.executeUpdate();
+                  pstmt.close();
+                  }
+               catch (java.sql.SQLException e1){
+                  System.out.println(e1.getMessage());         
+                  }
+               
+                              
+                        
+             break;
+     
                     
                     
 
