@@ -216,6 +216,25 @@ public class courses {
             System.out.println("Enter your member ID"); 
             memberID = Integer.parseInt (input.readLine());
             
+            try {
+               String selectCourses = "SELECT CourseSession.sessionID, Course.courseName, CourseSession.couSesDate, CourseSession.CouSesTime, Facility.facilityName FROM Course, CourseSession, CourseEnrollment, Employee,Facility WHERE CourseSession.sessionID = CourseEnrollment.sessionID AND CourseSession.empID=Employee.empID AND Employee.facilityID=Facility.facilityID AND CourseSession.courseID = Course.courseID AND memberID=? AND cousesDate>=? ORDER BY Facility.facilityID ASC;";
+               PreparedStatement pstmt = conn.prepareStatement(selectCourses);
+               pstmt.setInt(1, memberID);
+               pstmt.setInt(2, getTodaysdate());
+               ResultSet rs = pstmt.executeQuery();
+               System.out.println("Session, Course, Date, Time, Facility\n");
+               
+               while (rs.next()) {
+                  System.out.println(rs.getInt("sessionID") + " " + rs.getString("courseName") + " " + rs.getInt("couSesDate") + " " + rs.getString("couSesTime") + " " + rs.getString("FacilityName"));
+                  }
+               pstmt.close();
+               rs.close();
+               }
+            
+               catch (java.sql.SQLException e2){
+                  System.out.println(e2.getMessage());           
+               }
+               
             System.out.println("Enter session ID you want to cancel your spot in"); 
             sessionID = Integer.parseInt (input.readLine());
             
@@ -235,6 +254,7 @@ public class courses {
             
             } 
             break;
+
 
             
             case "SB": // See booked courses for member
