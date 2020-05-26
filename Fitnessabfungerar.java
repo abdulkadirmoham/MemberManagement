@@ -475,12 +475,12 @@ public class Fitnessabfungerar {
                     
 
                 case "Q":
-                    System.out.println("exit program");
+                    System.out.println("Program terminated");
                     fortsatt = false;
                     break;
 
                 default:
-                    System.out.println("fel val");
+                    System.out.println("Wrong choice");
                     break;
 
             }
