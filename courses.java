@@ -2,6 +2,8 @@ import java.io.*;
 import java.sql.*;
 import org.sqlite.SQLiteConfig;
 import java.util.*;
+import java.util.Date;
+import java.time.LocalDate;
 
 public class courses {
  
@@ -37,6 +39,11 @@ public class courses {
       static String eEMail;
      //Enrollment
       static int currentDate;
+      static int getTodaysdate(){
+         String str = LocalDate.now().toString();
+         str = str.replace("-","");
+         return Integer.parseInt(str);
+      }
     //Course Session
       static int sessionID;
       static int capacity;
@@ -96,28 +103,75 @@ public class courses {
          String val = input.readLine();
          
          switch (val) {
+         
              case "BC": // Book course
-
-                 System.out.println("Enter memberID");
-                 int memberID = Integer.parseInt(input.readLine());
-                 System.out.println("Enter current date(YYYYMMDD)");
-                 int currentDate = Integer.parseInt(input.readLine());
-                 try {
-                     String selectCourses = "select CourseSession.sessionID, Course.courseName, CourseSession.couSesDate, CourseSession.couSesTime from CourseSession,Course where Course.courseID=CourseSession.courseID AND CousesDate > ? order by CouSesDate ASC;";
-                     PreparedStatement pstmt = conn.prepareStatement(selectCourses);
-                     pstmt.setInt(1, currentDate);
-                     ResultSet rs = pstmt.executeQuery();
-                     System.out.println("Session, Course, Date, Time");
-                     while (rs.next()) {
-                         System.out.println(rs.getInt("sessionID") + " " + rs.getString("courseName") + " " + rs.getInt("couSesDate") + " " + rs.getInt("couSesTime"));
-                     }
+           
+            System.out.println("Enter memberID");
+            int memberID = Integer.parseInt(input.readLine());
+                      
+            System.out.println("Enter Facility");
+            int FacilityID = Integer.parseInt(input.readLine());
+               
+               try {
+               String selectCourses = "select CourseSession.sessionID, Course.courseName, CourseSession.couSesDate, CourseSession.couSesTime, Employee.facilityID from CourseSession,Course,Employee where Course.courseID=CourseSession.courseID AND CourseSession.empID=Employee.empID AND Employee.EmpID=? AND CousesDate > ? order by CouSesDate ASC;";
+               PreparedStatement pstmt = conn.prepareStatement(selectCourses);
+               pstmt.setInt(1, FacilityID);
+               pstmt.setInt(2, getTodaysdate());
+               ResultSet rs = pstmt.executeQuery();
+               System.out.println("Session, Course, Date, Time, Facility");
+               
+               while (rs.next()) {
+                  System.out.println(rs.getInt("sessionID") + " " + rs.getString("courseName") + " " + rs.getInt("couSesDate") + " " + rs.getString("couSesTime") + " " + rs.getInt("FacilityID"));
+                  }
+               pstmt.close();
+               rs.close();
+               }
+               
+            catch (java.sql.SQLException e2){
+               System.out.println(e2.getMessage());
+               }
+               
+            System.out.println("Enter SessionID");
+            int sessionID = Integer.parseInt(input.readLine());
+            
+                      
+            try {
+               String check = "select Membership.typeID from Membership where memberID=?";
+               PreparedStatement pstmt = conn.prepareStatement(check);
+               pstmt.setInt(1, memberID);
+               ResultSet rs = pstmt.executeQuery();
+               
+               while (rs.next()){
+               typeID = rs.getString("typeID");
+               pstmt.close();
+               rs.close();
+               }
+            }
+               catch (java.sql.SQLException e2){
+                  System.out.println(e2.getMessage());
+               }
+               
+                 
+               try {
+                  if (typeID.equals("Gold")){  
+                     String inserth = "INSERT INTO CourseEnrollment(memberID, sessionID) VALUES(?,?)";
+                     PreparedStatement pstmt = conn.prepareStatement(inserth);
+                     pstmt.setInt(1, memberID);
+                     pstmt.setInt(2, sessionID);
+                     pstmt.executeUpdate();
                      pstmt.close();
-                     rs.close();
-                 }
-                 catch (java.sql.SQLException e2){
-                     System.out.println(e2.getMessage());
-                 }
-                 break;
+                     System.out.print("Member " + memberID + " Added to course.  \n");
+                  }
+                  else{
+                     System.out.println("Upgrade your membership to Gold for access to courses.");
+                  }
+               }
+               catch (java.sql.SQLException e2){
+                  System.out.println(e2.getMessage());
+               }
+            break;
+            
+            
                      
                  case "CC": //create course
                     
@@ -210,7 +264,7 @@ public class courses {
             case "RM": // on course attendance
 
                     System.out.println("Enter sessionID");
-                    int sessionID = Integer.parseInt(input.readLine());
+                    sessionID = Integer.parseInt(input.readLine());
 
                     try {
                         String selef = "select count(memberID) from CourseEnrollment where sessionID = ?";
