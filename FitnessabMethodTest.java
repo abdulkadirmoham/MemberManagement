@@ -16,10 +16,11 @@ import java.util.*;
     static int joinDate;
     static String endDate;
     static String mEmail;
+    static String mPw;
     // Payment
     static int memberID;
     static int paymentID;
-    static String paymethod;
+    static String paymenMethod;
     static int paymentDate;
     // Facility
     static int facilityID;
@@ -36,6 +37,7 @@ import java.util.*;
     static String position;
     static int ePhoneNo;
     static String eEMail;
+    static String ePw; 
     //Schedule
     static int scheduleDate;
     static String scheduleTime;
@@ -84,8 +86,9 @@ import java.util.*;
         boolean fortsatt = true;
 
         while (fortsatt) {
-
+            System.out.println("MAIN MENU");
             System.out.println("P - New member");
+            System.out.println("CX - Create payment");
             System.out.println("U - Update Phone number for member");
             System.out.println("G - Update Email for member");
             System.out.println("N - Update Address for member");
@@ -108,6 +111,10 @@ import java.util.*;
              
                 case "P": // New member
                 newMember();
+                break;
+                
+                case "CX": //Create payment
+                createPayment();
                 break;
 
                 case "G"://update email
@@ -201,6 +208,8 @@ import java.util.*;
                             pstmt.setString(9, mPw);
                             pstmt.executeUpdate();
                             pstmt.close();
+                            
+                           System.out.println ("Welcome as new member to FitnessAB, please go to main menu and choose CX to choose your payment method\n");
                         } catch (java.sql.SQLException e1) {
                             System.out.println(e1.getMessage());
                         }
@@ -220,6 +229,8 @@ import java.util.*;
                             pstmt.setString(10, mPw);
                             pstmt.executeUpdate();
                             pstmt.close();
+                            
+                           System.out.println ("Welcome as new member to FitnessAB, please go to main menu and choose CX to choose your payment method\n");
                         } catch (java.sql.SQLException e1) {
                             System.out.println(e1.getMessage());
                         }
@@ -400,7 +411,29 @@ import java.util.*;
                   }
                catch (java.sql.SQLException e1){
                   System.out.println(e1.getMessage());         
-                  }
+         }
+       }
+       
+       public static void createPayment() throws IOException {
+       try {
+       System.out.println("Enter member ID"); 
+       memberID = Integer.parseInt(input.readLine()); 
+       System.out.println ("Enter payment method, choose between: Direct debit, Invoice, Cashier"); 
+       paymentMethod = input.readLine(); 
+       
+       String payment = "INSERT INTO Payment (memberID, paymentMethod, payDate) VALUES (?,?,?)"; 
+       PreparedStatement pstmt = conn.prepareStatement(payment);
+       pstmt.setInt(1, memberID);
+       pstmt.setString(2, paymentMethod);
+       pstmt.setInt(3, getTodaysdate()); 
+       pstmt.executeUpdate();
+       pstmt.close(); 
+        
+       System.out.print ("Payment created successfully.   \n");  
+      }
+       catch (java.sql.SQLException e2) {
+       System.out.println(e2.getMessage());
+         }
        }
      }
        
