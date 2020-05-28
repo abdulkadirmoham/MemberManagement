@@ -5,7 +5,7 @@ import org.sqlite.SQLiteConfig;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-   public class FitnessabMethodTest {
+   public class FitnessabMethodTest {     // Base code is from our previous project in TIG058
     //Member
     static int dateOfBirth;
     static String mFirstName;
@@ -49,7 +49,7 @@ import java.util.*;
        }
     static String addOneMonth()  {
         String DATE_FORMAT = "yyyyMMdd";
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);        //https://beginnersbook.com/2013/05/simple-date-format-java/
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.MONTH, 1);
           return sdf.format(cal.getTime());
@@ -89,6 +89,7 @@ import java.util.*;
             System.out.println("MAIN MENU");
             System.out.println("P - New member");
             System.out.println("CX - Create payment");
+            System.out.println("ND - update payment method");
             System.out.println("U - Update Phone number for member");
             System.out.println("G - Update Email for member");
             System.out.println("N - Update Address for member");
@@ -98,7 +99,7 @@ import java.util.*;
             System.out.println("RM - Report on course attendance");
             System.out.println("NE - Add new employee");
             
-            System.out.println("ND - update payment method");
+            
     	 /*  System.out.println("L - Se tidrapporter for person");
     	   System.out.println("S - Se summa arbetade timmar");
     	   System.out.println("A - Se alla personer och deras tidsrapporter"); */
@@ -147,7 +148,7 @@ import java.util.*;
                newEmployee();   
                break;
                
-               case "ND": //New employee
+               case "ND": //update payment
                updatepayment();
                break;
                
@@ -251,7 +252,7 @@ import java.util.*;
             PreparedStatement pstmt = conn.prepareStatement(insertz);
             pstmt.setString(1, mEmail);
             pstmt.setInt(2, memberID);
-            int rowAffected = pstmt.executeUpdate();
+            int rowAffected = pstmt.executeUpdate();                              //https://stackoverflow.com/questions/2571915/return-number-of-rows-affected-by-sql-update-statement-in-java
             System.out.println(String.format("Row affected %d", rowAffected));
 
               } 
@@ -273,7 +274,7 @@ import java.util.*;
           pstmt.setString(1, mPhoneNo);
           pstmt.setInt(2, memberID);
           
-          int rowAffected = pstmt.executeUpdate();
+          int rowAffected = pstmt.executeUpdate();                             //https://stackoverflow.com/questions/2571915/return-number-of-rows-affected-by-sql-update-statement-in-java
           System.out.println(String.format("Row affected %d", rowAffected));
             } 
            catch (java.sql.SQLException e2) {
