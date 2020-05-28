@@ -21,7 +21,7 @@ import java.util.*;
     static int memberID;
     static int paymentID;
     static String paymentmethod;
-    static int paymentDate;
+    static int payDate;
     // Facility
     static int facilityID;
     static String fAddress;
@@ -196,6 +196,17 @@ import java.util.*;
                     System.out.println("Choose password");
                     String mPw = input.readLine();
                     
+                    System.out.println("Choose membership type! \n Gold:399kr Silver:299kr Bronze:199kr");
+                    String typeID = input.readLine();
+                    
+                    System.out.println("Enter payment method, choose between: Direct debit, Invoice, Cashier");
+                    String paymentmethod = input.readLine();
+                    
+                    
+                    
+                    
+                    
+                    
                   if (endDate.equals ("null")) {
 
                         try {
@@ -213,7 +224,7 @@ import java.util.*;
                             pstmt.executeUpdate();
                             pstmt.close();
                             
-                           System.out.println ("Welcome as new member to FitnessAB, please go to main menu and choose CX to choose your payment method\n");
+                           System.out.println ("Welcome as a new member to FitnessAB! \n");
                         } catch (java.sql.SQLException e1) {
                             System.out.println(e1.getMessage());
                         }
@@ -238,8 +249,81 @@ import java.util.*;
                         } catch (java.sql.SQLException e1) {
                             System.out.println(e1.getMessage());
                         }
+                       
                     }
+                    try{
+                    String grud = "SELECT * FROM Member WHERE  memberID = (SELECT MAX(memberID)  FROM Member);";
+                      PreparedStatement pstmt = conn.prepareStatement(grud);
+                      
+                      ResultSet rs = pstmt.executeQuery(); 
+                       while (rs.next()){
+                        memberID = rs.getInt("memberID");
+                        pstmt.close();
+                        rs.close();                
+                     }
                   }
+                  catch (java.sql.SQLException e2){
+                  System.out.println(e2.getMessage());
+               }
+            try{
+            String tudy = "Insert into Membership(memberID, typeID) VALUES(?,?)";
+            PreparedStatement pstmt = conn.prepareStatement(tudy);
+                     pstmt.setInt(1, memberID);
+                     pstmt.setString(2, typeID);
+                     pstmt.executeUpdate();
+                     pstmt.close();
+                    
+
+            }
+                  catch (java.sql.SQLException e2){
+                  System.out.println(e2.getMessage());
+               }
+              try{ 
+               String p1 = "Direct debit";
+               String p2 = "Invoice";
+              String p3 = "Cashier";
+
+         if (paymentmethod.matches("(?i)p1|p2|p3")){
+                 
+            String diii = "Insert into Payment(memberID, paymentmethod, payDate) VALUES(?,?,?)";
+            PreparedStatement pstmt = conn.prepareStatement(diii);
+                     pstmt.setInt(1, memberID);
+                     pstmt.setString(2, paymentmethod);
+                     pstmt.setInt(3, payDate);
+                     pstmt.executeUpdate();
+                     pstmt.close();
+                    
+
+            
+                  }
+                 else{ 
+                 System.out.println ("Wrong choice.");  
+                 
+            
+                    
+               }
+            }
+                  catch (java.sql.SQLException e2){
+                  System.out.println(e2.getMessage());
+               }
+                 
+
+                 try{
+            String diii = "Insert into Payment(memberID, paymentmethod, payDate) VALUES(?,?,?)";
+            PreparedStatement pstmt = conn.prepareStatement(diii);
+                     pstmt.setInt(1, memberID);
+                     pstmt.setString(2, paymentmethod);
+                     pstmt.setInt(3, payDate);
+                     pstmt.executeUpdate();
+                     pstmt.close();
+                    
+
+            }
+                  catch (java.sql.SQLException e2){
+                  System.out.println(e2.getMessage());
+               }
+               }
+               
         public static void updatEmail() throws IOException { // funkar
            
            System.out.println("Enter memberID");
@@ -442,12 +526,12 @@ import java.util.*;
        System.out.println("Enter member ID"); 
        memberID = Integer.parseInt(input.readLine()); 
        System.out.println ("Enter payment method, choose between: Direct debit, Invoice, Cashier"); 
-       paymentMethod = input.readLine(); 
+       paymentmethod = input.readLine(); 
        
        String payment = "INSERT INTO Payment (memberID, paymentMethod, payDate) VALUES (?,?,?)"; 
        PreparedStatement pstmt = conn.prepareStatement(payment);
        pstmt.setInt(1, memberID);
-       pstmt.setString(2, paymentMethod);
+       pstmt.setString(2, paymentmethod);
        pstmt.setInt(3, getTodaysdate()); 
        pstmt.executeUpdate();
        pstmt.close(); 
