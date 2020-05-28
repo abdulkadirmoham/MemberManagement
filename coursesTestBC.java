@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class coursesTestBC {
 
    // Sokvog till SQLite-databas. OBS! andra sokvag sa att den pekar ut din databas
-   public static final String DB_URL = "jdbc:sqlite:C:/Users/hanna/OneDrive/Dokument/Systemvetenskap/TIG059/Membership_project_java/membership_course_db4.6.db";
+   public static final String DB_URL = "jdbc:sqlite:C:/programmering/membership_course_db4.7.db";
    // Namnet pa den driver som anvands av java for attprata med SQLite
    public static final String DRIVER = "org.sqlite.JDBC";  
 
@@ -369,17 +369,23 @@ public class coursesTestBC {
          pstmt.setInt(4, couSesDate);
          pstmt.setString(5, couSesTime);
          pstmt.setInt(6, roomNo);
-         pstmt.setInt(7, empID); 
+         pstmt.setInt(7, empID);
+         
+          
          pstmt.executeUpdate();
          pstmt.close();
+         System.out.println("Session created!");
          
-         System.out.print("Session " + sessionID + " created successfully.  \n");
-
-            } 
+          } 
             
          catch (java.sql.SQLException e2) {
          System.out.println(e2.getMessage());
          }
+         
+                         
+
+                                                         
+    
        }
         
         

@@ -19,7 +19,7 @@ import java.util.*;
     // Payment
     static int memberID;
     static int paymentID;
-    static String paymethod;
+    static String paymentmethod;
     static int paymentDate;
     // Facility
     static int facilityID;
@@ -61,7 +61,7 @@ import java.util.*;
     
 
     // Sokvog till SQLite-databas. OBS! andra sokvag sa att den pekar ut din databas
-    public static final String DB_URL = "jdbc:sqlite:C:/programmering/membership_course_db4.6.db";
+    public static final String DB_URL = "jdbc:sqlite:C:/programmering/membership_course_db4.7.db";
     // Namnet på den driver som används av java för attprata med SQLite
     public static final String DRIVER = "org.sqlite.JDBC";
 
@@ -94,6 +94,8 @@ import java.util.*;
             System.out.println("R - Report on new members");
             System.out.println("RM - Report on course attendance");
             System.out.println("NE - Add new employee");
+            
+            System.out.println("ND - update payment method");
     	 /*  System.out.println("L - Se tidrapporter for person");
     	   System.out.println("S - Se summa arbetade timmar");
     	   System.out.println("A - Se alla personer och deras tidsrapporter"); */
@@ -137,7 +139,11 @@ import java.util.*;
                case "NE": //New employee
                newEmployee();   
                break;
-     
+               
+               case "ND": //New employee
+               updatepayment();
+               break;
+               
                case "Q":
                System.out.println("Program terminated");
                fortsatt = false;
@@ -198,6 +204,7 @@ import java.util.*;
                             pstmt.setString(9, mPw);
                             pstmt.executeUpdate();
                             pstmt.close();
+                            System.out.println("Member created!");
                         } catch (java.sql.SQLException e1) {
                             System.out.println(e1.getMessage());
                         }
@@ -217,6 +224,7 @@ import java.util.*;
                             pstmt.setString(10, mPw);
                             pstmt.executeUpdate();
                             pstmt.close();
+                            System.out.println("Member created!");
                         } catch (java.sql.SQLException e1) {
                             System.out.println(e1.getMessage());
                         }
@@ -354,7 +362,28 @@ import java.util.*;
         System.out.println(e3.getMessage());
       }
      }
-   
+    public static void updatepayment() throws IOException { 
+      System.out.println("Enter payment ID");
+      paymentID = Integer.parseInt(input.readLine());
+                    /*System.out.println("Enter endDate");
+                    endDate = Integer.parseInt(input.readLine());*/
+         System.out.println("Enter payment method");
+         paymentmethod = input.readLine();
+         
+       try {
+         String insertq = "UPDATE Payment SET paymentmethod=? WHERE paymentID= ?";
+         PreparedStatement pstmt = conn.prepareStatement(insertq);
+         pstmt.setString(1, paymentmethod);
+         pstmt.setInt(2, paymentID);
+
+         pstmt.executeUpdate();
+         System.out.println("Payment method is updated!");
+
+         } 
+         catch (java.sql.SQLException e2) {
+         System.out.println(e2.getMessage());
+       }
+      }
    public static void newEmployee() throws IOException { //funkar
    
             System.out.println("Enter facilityID");
