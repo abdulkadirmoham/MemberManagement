@@ -16,6 +16,7 @@ import java.util.*;
     static int joinDate;
     static String endDate;
     static String mEmail;
+    static String mPw;
     // Payment
     static int memberID;
     static int paymentID;
@@ -36,6 +37,7 @@ import java.util.*;
     static String position;
     static String ePhoneNo;
     static String eEMail;
+    static String ePw; 
     //Schedule
     static int scheduleDate;
     static String scheduleTime;
@@ -62,7 +64,7 @@ import java.util.*;
 
     // Sokvog till SQLite-databas. OBS! andra sokvag sa att den pekar ut din databas
     public static final String DB_URL = "jdbc:sqlite:C:/programmering/membership_course_db4.7.db";
-    // Namnet på den driver som används av java för attprata med SQLite
+    // Namnet pï¿½ den driver som anvï¿½nds av java fï¿½r attprata med SQLite
     public static final String DRIVER = "org.sqlite.JDBC";
 
     public static void main(String[] args) throws IOException {
@@ -84,8 +86,9 @@ import java.util.*;
         boolean fortsatt = true;
 
         while (fortsatt) {
-
+            System.out.println("MAIN MENU");
             System.out.println("P - New member");
+            System.out.println("CX - Create payment");
             System.out.println("U - Update Phone number for member");
             System.out.println("G - Update Email for member");
             System.out.println("N - Update Address for member");
@@ -110,6 +113,10 @@ import java.util.*;
              
                 case "P": // New member
                 newMember();
+                break;
+                
+                case "CX": //Create payment
+                createPayment();
                 break;
 
                 case "G"://update email
@@ -204,7 +211,8 @@ import java.util.*;
                             pstmt.setString(9, mPw);
                             pstmt.executeUpdate();
                             pstmt.close();
-                            System.out.println("Member created!");
+                            
+                           System.out.println ("Welcome as new member to FitnessAB, please go to main menu and choose CX to choose your payment method\n");
                         } catch (java.sql.SQLException e1) {
                             System.out.println(e1.getMessage());
                         }
@@ -224,7 +232,8 @@ import java.util.*;
                             pstmt.setString(10, mPw);
                             pstmt.executeUpdate();
                             pstmt.close();
-                            System.out.println("Member created!");
+                            
+                           System.out.println ("Welcome as new member to FitnessAB, please go to main menu and choose CX to choose your payment method\n");
                         } catch (java.sql.SQLException e1) {
                             System.out.println(e1.getMessage());
                         }
@@ -319,7 +328,7 @@ import java.util.*;
        }
      }
      
-     public static void cancelMembership() throws IOException { //funkar, lade in text som skriver ut när medlemskap avslutas
+     public static void cancelMembership() throws IOException { //funkar, lade in text som skriver ut nï¿½r medlemskap avslutas
       System.out.println("Enter memberID");
       memberID = Integer.parseInt(input.readLine());
                     /*System.out.println("Enter endDate");
@@ -424,11 +433,33 @@ import java.util.*;
                   }
                catch (java.sql.SQLException e1){
                   System.out.println(e1.getMessage());         
-                  }
+         }
+       }
+       
+       public static void createPayment() throws IOException {
+       try {
+       System.out.println("Enter member ID"); 
+       memberID = Integer.parseInt(input.readLine()); 
+       System.out.println ("Enter payment method, choose between: Direct debit, Invoice, Cashier"); 
+       paymentMethod = input.readLine(); 
+       
+       String payment = "INSERT INTO Payment (memberID, paymentMethod, payDate) VALUES (?,?,?)"; 
+       PreparedStatement pstmt = conn.prepareStatement(payment);
+       pstmt.setInt(1, memberID);
+       pstmt.setString(2, paymentMethod);
+       pstmt.setInt(3, getTodaysdate()); 
+       pstmt.executeUpdate();
+       pstmt.close(); 
+        
+       System.out.print ("Payment created successfully.   \n");  
+      }
+       catch (java.sql.SQLException e2) {
+       System.out.println(e2.getMessage());
+         }
        }
      }
        
-      /*     GAMMAL KOD FRÅN TIG058
+      /*     GAMMAL KOD FRï¿½N TIG058
             case 'T':
             System.out.println("Ange Personnr (YYYYMMDD)");
             int pnr2 = Integer.parseInt(input.readLine());
