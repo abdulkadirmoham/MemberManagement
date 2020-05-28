@@ -89,6 +89,7 @@ import java.util.*;
             System.out.println("MAIN MENU");
             System.out.println("P - New member");
             System.out.println("CX - Create payment");
+            System.out.println("MP - My profile");
             System.out.println("ND - update payment method");
             System.out.println("U - Update Phone number for member");
             System.out.println("G - Update Email for member");
@@ -114,6 +115,10 @@ import java.util.*;
              
                 case "P": // New member
                 newMember();
+                break;
+                
+                case "MP": //My profile
+                myProfile();
                 break;
                 
                 case "CX": //Create payment
@@ -458,7 +463,24 @@ import java.util.*;
        System.out.println(e2.getMessage());
          }
        }
+    public static void myProfile() throws IOException {
+    try {    
+    String profile = "SELECT Member.mFirstName, Member.mLastName, Member.dateOfBirth, Member.memberID, Membership.typeID, Member.mEmail, Member.mPhoneNo, Member.mAddress, Member.mZipCode, Payment.paymentMethod FROM Member, Membership, Payment WHERE Member.memberID =? AND Member.memberID = Membership.memberID AND Member.memberID = Payment.memberID";    
+    PreparedStatement pstmt = conn.prepareStatement(profile);
+    pstmt.setInt(1, memberID);
+    ResultSet rs = pstmt.executeQuery();
+               
+      while (rs.next()) {
+         System.out.println( "First name: " + rs.getString("mFirstName") + "\n" + "Last name: " + rs.getString("mLastName") + "\n" + "Date of birth: " + rs.getInt("dateOfBirth") + "\n" + "Member ID: "+ rs.getInt("memberID") + "\n" + "Membership type: " + rs.getString("typeID") + "\n" + "E-mail: " + rs.getString("mEmail") + "\n" + "Phone number: " + rs.getString("mPhoneNo") + "\n" + "Address: " + rs.getString("mAddress") + "\n" + "Zip code: "+ rs.getInt("mZipCode") + "\n" + "Payment method: " + rs.getString("paymentMethod"));
+         }
+          pstmt.close();
+          rs.close();
+         } 
+        catch (java.sql.SQLException e3) {
+        System.out.println(e3.getMessage());
+      }
      }
+    }
        
       /*     GAMMAL KOD FR�N TIG058
             case 'T':
