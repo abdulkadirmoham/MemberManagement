@@ -12,7 +12,7 @@ import java.util.*;
     static String mLastName;
     static String mAddress;
     static int mZipCode;
-    static int mPhoneNo;
+    static String mPhoneNo;
     static int joinDate;
     static String endDate;
     static String mEmail;
@@ -24,7 +24,7 @@ import java.util.*;
     // Facility
     static int facilityID;
     static String fAddress;
-    static int fPhone;
+    static String fPhone;
     static String FEmail;
     //Membership type
     static String typeID;
@@ -34,7 +34,7 @@ import java.util.*;
     static String eFirstName;
     static String eLastName;
     static String position;
-    static int ePhoneNo;
+    static String ePhoneNo;
     static String eEMail;
     //Schedule
     static int scheduleDate;
@@ -61,7 +61,7 @@ import java.util.*;
     
 
     // Sokvog till SQLite-databas. OBS! andra sokvag sa att den pekar ut din databas
-    public static final String DB_URL = "jdbc:sqlite:C:/Users/hanna/OneDrive/Dokument/Systemvetenskap/TIG059/Membership_project_java/membership_course_db4.6.db";
+    public static final String DB_URL = "jdbc:sqlite:C:/programmering/membership_course_db4.6.db";
     // Namnet på den driver som används av java för attprata med SQLite
     public static final String DRIVER = "org.sqlite.JDBC";
 
@@ -153,10 +153,7 @@ import java.util.*;
    
    public static void newMember() throws IOException { 
    
-   /* FUNKAR INTE, felmeddelande:   
-    Exception in thread "main" java.lang.NullPointerException
- 	at FitnessabMethodTest.newMember(FitnessabMethodTest.java:212)
- 	at FitnessabMethodTest.main(FitnessabMethodTest.java:117) */
+  //funkar
    
                     System.out.println("Enter Date of birth (YYYYMMDD)");
                     int dateOfBirth = Integer.parseInt(input.readLine());
@@ -171,7 +168,7 @@ import java.util.*;
                     String mEmail = input.readLine();
 
                     System.out.println("Enter Phone number");
-                    mPhoneNo = Integer.parseInt(input.readLine());
+                    mPhoneNo = input.readLine();
 
                     System.out.println("Enter Address");
                     String mAddress = input.readLine();
@@ -195,7 +192,7 @@ import java.util.*;
                             pstmt.setString(3, mLastName);
                             pstmt.setString(4, mAddress);
                             pstmt.setInt(5, mZipCode);
-                            pstmt.setInt(6, mPhoneNo);
+                            pstmt.setString(6, mPhoneNo);
                             pstmt.setString(7, mEmail);
                             pstmt.setInt(8, getTodaysdate());
                             pstmt.setString(9, mPw);
@@ -213,7 +210,7 @@ import java.util.*;
                             pstmt.setString(3, mLastName);
                             pstmt.setString(4, mAddress);
                             pstmt.setInt(5, mZipCode);
-                            pstmt.setInt(6, mPhoneNo);
+                            pstmt.setString(6, mPhoneNo);
                             pstmt.setString(7, mEmail);
                             pstmt.setInt(8, getTodaysdate());
                             pstmt.setString(9, endDate);
@@ -246,17 +243,17 @@ import java.util.*;
             }
           }
           
-       public static void updatePhoneNo() throws IOException { // ger felmeddelande när man skriver in nytt telefonnummer som 46707osvosv men inte om man skriver 0707osvosv, men första 0 läggs ej in i databasen. 
+       public static void updatePhoneNo() throws IOException { // funkar 
          System.out.println("Enter memberID");
          memberID = Integer.parseInt(input.readLine());
          System.out.println("Enter Phone number");
-         mPhoneNo = Integer.parseInt(input.readLine());
+         mPhoneNo = input.readLine();
          
          
        try {
           String inserty = "UPDATE Member SET mPhoneNo=? WHERE memberID= ?";
           PreparedStatement pstmt = conn.prepareStatement(inserty);
-          pstmt.setInt(1, mPhoneNo);
+          pstmt.setString(1, mPhoneNo);
           pstmt.setInt(2, memberID);
           
           int rowAffected = pstmt.executeUpdate();
@@ -336,9 +333,7 @@ import java.util.*;
       }
       
      public static void createReportMember() throws IOException { 
-     //funkar men printar ut telefonnummer konstigt: 
-     // memberID, date of birth, first name, last name, address, Zip code, phone number, email, join date, end date
-     //7 19920225 William Karlsson Aschebergsgatan 22 43126 -543405689 null 20200416 null
+     //funkar
       System.out.println("Enter join date in format YYYYMMDD");
       joinDate = Integer.parseInt(input.readLine());
 
@@ -350,7 +345,7 @@ import java.util.*;
           System.out.println("memberID, date of birth, first name, last name, address, Zip code, phone number, email, join date, end date");
        
           while (rs.next()) {
-           System.out.println(rs.getInt("memberID") + " " + rs.getInt("dateOfBirth") + " " + rs.getString("mFirstName") + " " + rs.getString("mLastName") + " " + rs.getString("mAddress") + " " + rs.getInt("mZipCode") + " " + rs.getInt("mPhoneNo") + " " + rs.getString("mEmail") + " " + rs.getInt("joinDate") + " " + rs.getString("endDate"));
+           System.out.println(rs.getInt("memberID") + " " + rs.getInt("dateOfBirth") + " " + rs.getString("mFirstName") + " " + rs.getString("mLastName") + " " + rs.getString("mAddress") + " " + rs.getInt("mZipCode") + " " + rs.getString("mPhoneNo") + " " + rs.getString("mEmail") + " " + rs.getInt("joinDate") + " " + rs.getString("endDate"));
           }
           pstmt.close();
           rs.close();
@@ -360,7 +355,7 @@ import java.util.*;
       }
      }
    
-   public static void newEmployee() throws IOException { //funkar men även här utelämnas första 0an i telefonnummer
+   public static void newEmployee() throws IOException { //funkar
    
             System.out.println("Enter facilityID");
             int facilityID = Integer.parseInt(input.readLine());
@@ -375,7 +370,7 @@ import java.util.*;
             String position = input.readLine();
             
             System.out.println("Enter ePhone number");
-            ePhoneNo = Integer.parseInt(input.readLine());
+            ePhoneNo = input.readLine();
                         
             System.out.println("Enter eEmail");
             String eEmail = input.readLine();
@@ -391,7 +386,7 @@ import java.util.*;
                   pstmt.setString(2, eFirstName);
                   pstmt.setString(3, eLastName);
                   pstmt.setString(4, position);
-                  pstmt.setInt(5, ePhoneNo);
+                  pstmt.setString(5, ePhoneNo);
                   pstmt.setString(6, eEmail);
                   pstmt.setString(7, ePw);
                            
