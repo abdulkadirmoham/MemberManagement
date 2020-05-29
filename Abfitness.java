@@ -6,7 +6,7 @@ import java.util.Date;
 import java.time.LocalDate;
 import java.text.SimpleDateFormat;
 
-public class Abfitness {
+public class Abfitness { // The base code is taken from our previous project
 
    // Sokvog till SQLite-databas. OBS! andra sokvag sa att den pekar ut din databas
    public static final String DB_URL = "jdbc:sqlite:C:/programmering/membership_course_db4.8.db";
@@ -295,7 +295,7 @@ public class Abfitness {
             
             case "VM": // View member profile
             memberProfile();
-            employeeUpdates();
+            myUpdates();
             break;
 
             case "L":
@@ -502,53 +502,6 @@ public class Abfitness {
       }
    }   
 
-   public static void employeeUpdates() throws IOException{
-      boolean fortsatt = true;
-      while (true) { 
-      
-            System.out.println("1 - update payment method");
-            System.out.println("2 - Update Phone number for member");
-            System.out.println("3 - Update Email for member");
-            System.out.println("4 - Update Address for member");
-            System.out.println("5 - Update membership type");
-            System.out.println("0 - Cancel membership");
-            System.out.println("\n" + "B - Back");
-         
-         String val = input.readLine();
-         
-         switch (val.toUpperCase()) {
-         
-            case "1": // Update Payment Method
-            memberUpdatePayment();
-            break;
-                                        
-            case "2": //Update member phone number
-            updatePhoneNo();
-            break;
-
-            case "3": // Update email
-            updatEmail();
-            break;
-            
-            case "4": //update address.
-            updateAddress();
-            break;
-            
-            case "5": //update membership
-            updateMembershipType();
-            
-            case "0":
-            cancelMembership();
-         
-            case "B"://back to previous menu.
-            employeeMenu();
-            default:
-            System.out.println("Wrong choice");
-            break;
-         }
-      }
-   }
-
    public static void myUpdates() throws IOException{
       boolean fortsatt = true;
       while (true) { 
@@ -583,10 +536,12 @@ public class Abfitness {
             
             case "5": //update membership
             updateMembershipType();
+            break;
             
             case "0":
             cancelMembership();
-         
+            break;
+            
             case "B"://back to previous menu.
             memberMenu();
             default:
@@ -602,7 +557,7 @@ public class Abfitness {
          PreparedStatement pstmt = conn.prepareStatement(profile);
          pstmt.setInt(1, memberID);
          ResultSet rs = pstmt.executeQuery();
-         System.out.print(memberID +"\n");   
+         System.out.print("My profile \n");   
          while (rs.next()) {
             System.out.println("First name: " + rs.getString("mFirstName") + "\n" + "Last name: " + rs.getString("mLastName") + "\n" + "Date of birth: " + rs.getInt("dateOfBirth") + "\n" + "Member ID: "+ rs.getInt("memberID") + "\n" + "Membership type: " + rs.getString("typeID") + "\n" + "E-mail: " + rs.getString("mEmail") + "\n" + "Phone number: " + rs.getString("mPhoneNo") + "\n" + "Address: " + rs.getString("mAddress") + "\n" + "Zip code: "+ rs.getInt("mZipCode") + "\n" + "Payment method: " + rs.getString("paymentMethod"));
          }
@@ -654,7 +609,7 @@ public class Abfitness {
       }
    }
                 
-      public static void deleteCourse() throws IOException { // Funkar om man inte vill ta bort courses som har coursesessions dï¿½ bryts foreign key constraint
+      public static void deleteCourse() throws IOException { // Funkar om man inte vill ta bort courses som har coursesessions då bryts foreign key constraint
          try {
             System.out.println("Enter courseID"); 
             courseID = Integer.parseInt(input.readLine());
@@ -832,7 +787,7 @@ public class Abfitness {
 
    
           
-   public static void bookCourse() throws IOException { //funkar, ï¿½ndrat i SQL-sï¿½kning sï¿½ att man fï¿½r skriva facility-namn och fï¿½r det utskrivet istï¿½llet fï¿½r ID
+   public static void bookCourse() throws IOException { //funkar, ändrat i SQL-sökning så att man får skriva facility-namn och får det utskrivet istället för ID
                
       System.out.println("Enter memberID");
       memberID = Integer.parseInt(input.readLine());
@@ -943,7 +898,7 @@ public class Abfitness {
       }
    }
    
-   public static void memberBookCourse() throws IOException { //funkar, ï¿½ndrat i SQL-sï¿½kning sï¿½ att man fï¿½r skriva facility-namn och fï¿½r det utskrivet istï¿½llet fï¿½r ID
+   public static void memberBookCourse() throws IOException { //funkar, ändrat i SQL-sökning så att man får skriva facility-namn och får det utskrivet istället för ID
                       
       System.out.println("Enter facility name");
       facilityName = input.readLine();
@@ -1009,8 +964,7 @@ public class Abfitness {
    } 
    
    public static void updatePhoneNo() throws IOException { // funkar 
-      System.out.println("Enter memberID");
-      memberID = Integer.parseInt(input.readLine());
+      
       System.out.println("Enter Phone number");
       mPhoneNo = input.readLine();                  
       try {
@@ -1018,8 +972,8 @@ public class Abfitness {
          PreparedStatement pstmt = conn.prepareStatement(inserty);
          pstmt.setString(1, mPhoneNo);
          pstmt.setInt(2, memberID);          
-         int rowAffected = pstmt.executeUpdate();                             //https://stackoverflow.com/questions/2571915/return-number-of-rows-affected-by-sql-update-statement-in-java
-         System.out.println(String.format("Row affected %d", rowAffected));
+         pstmt.executeUpdate();                             //https://stackoverflow.com/questions/2571915/return-number-of-rows-affected-by-sql-update-statement-in-java
+         System.out.println("Phone number updated successfully");
       } 
       catch (java.sql.SQLException e2) {
          System.out.println(e2.getMessage());
@@ -1027,8 +981,7 @@ public class Abfitness {
    }
    
    public static void updateAddress() throws IOException { //funkar
-      System.out.println("Enter memberID");
-      memberID = Integer.parseInt(input.readLine());
+      
       System.out.println("Enter Address");
       mAddress = input.readLine();
       System.out.println("Enter Zip Code");
@@ -1041,8 +994,8 @@ public class Abfitness {
          pstmt.setInt(2, mZipCode);
          pstmt.setInt(3, memberID);
 
-         int rowAffected = pstmt.executeUpdate();
-         System.out.println(String.format("Row affected %d", rowAffected));
+         pstmt.executeUpdate();
+         System.out.println("Address updated successfully");
 
       } 
       catch (java.sql.SQLException e2) {
@@ -1052,8 +1005,7 @@ public class Abfitness {
 
    public static void updateMembershipType() throws IOException { //funkar
         try {
-         System.out.println("Enter memberID");
-         memberID = Integer.parseInt(input.readLine());
+        
 
          System.out.println("Enter desired membership type \nChoose between Gold, Silver and Bronze");
          typeID = input.readLine();
@@ -1064,8 +1016,8 @@ public class Abfitness {
          pstmt.setString(1, typeID);
          pstmt.setInt(2, memberID);
 
-         int rowAffected = pstmt.executeUpdate();
-         System.out.println(String.format("Row affected %d", rowAffected));
+         pstmt.executeUpdate();
+         System.out.println("Membership type updated successfully");
 
          } 
          catch (java.sql.SQLException e2) {
@@ -1075,8 +1027,7 @@ public class Abfitness {
 
        public static void updatePayment() throws IOException {
    
-       System.out.println("Enter member ID"); 
-       memberID = Integer.parseInt(input.readLine()); 
+       
        System.out.println ("Enter payment method, choose between: Direct debit, Invoice, Cashier"); 
        paymentMethod = input.readLine(); 
        
@@ -1136,8 +1087,6 @@ public class Abfitness {
    
    public static void updatEmail() throws IOException { // funkar
            
-      System.out.println("Enter memberID");
-      memberID = Integer.parseInt(input.readLine());
       System.out.println("Enter Email");
       mEmail = input.readLine();
            
@@ -1146,8 +1095,8 @@ public class Abfitness {
          PreparedStatement pstmt = conn.prepareStatement(insertz);
          pstmt.setString(1, mEmail);
          pstmt.setInt(2, memberID);
-         int rowAffected = pstmt.executeUpdate();                              //https://stackoverflow.com/questions/2571915/return-number-of-rows-affected-by-sql-update-statement-in-java
-         System.out.println(String.format("Row affected %d", rowAffected));
+         pstmt.executeUpdate();                              //https://stackoverflow.com/questions/2571915/return-number-of-rows-affected-by-sql-update-statement-in-java
+         System.out.println("Email updated successfully");
 
       } 
       catch (java.sql.SQLException e2) {
@@ -1156,11 +1105,11 @@ public class Abfitness {
    }
    
    public static void cancelMembership() throws IOException { //funkar, lade in text som skriver ut nï¿½r medlemskap avslutas
-      System.out.println("Enter memberID");
-      memberID = Integer.parseInt(input.readLine());
+      System.out.println("If you are sure input YES");
+      String cancel = input.readLine();
                     /*System.out.println("Enter endDate");
                     endDate = Integer.parseInt(input.readLine());*/
-
+      if (cancel.equalsIgnoreCase("YES")){
        try {
          String inserta = "UPDATE Member SET endDate=? WHERE memberID= ?";
          PreparedStatement pstmt = conn.prepareStatement(inserta);
@@ -1171,8 +1120,13 @@ public class Abfitness {
          System.out.println(String.format("Your membership ends: " + addOneMonth()));
 
          } 
+         
          catch (java.sql.SQLException e2) {
             System.out.println(e2.getMessage());
+         }
+      }
+         else { System.out.println("Cancellation aborted");
+         myUpdates();
          }
       }
       
