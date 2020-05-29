@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 public class Abfitness {
 
    // Sokvog till SQLite-databas. OBS! andra sokvag sa att den pekar ut din databas
-   public static final String DB_URL = "jdbc:sqlite:membership_course_db4.7.db";
+   public static final String DB_URL = "jdbc:sqlite:membership_course_db4.8.db";
    // Namnet pa den driver som anvands av java for attprata med SQLite
    public static final String DRIVER = "org.sqlite.JDBC";  
 
@@ -295,7 +295,7 @@ public class Abfitness {
             
             case "VM": // View member profile
             memberProfile();
-            myUpdates();
+            employeeUpdates();
             break;
 
             case "L":
@@ -499,6 +499,53 @@ public class Abfitness {
          }
       }
    }   
+
+   public static void employeeUpdates() throws IOException{
+      boolean fortsatt = true;
+      while (true) { 
+      
+            System.out.println("1 - update payment method");
+            System.out.println("2 - Update Phone number for member");
+            System.out.println("3 - Update Email for member");
+            System.out.println("4 - Update Address for member");
+            System.out.println("5 - Update membership type");
+            System.out.println("0 - Cancel membership");
+            System.out.println("\n" + "B - Back");
+         
+         String val = input.readLine();
+         
+         switch (val.toUpperCase()) {
+         
+            case "1": // Update Payment Method
+            memberUpdatePayment();
+            break;
+                                        
+            case "2": //Update member phone number
+            updatePhoneNo();
+            break;
+
+            case "3": // Update email
+            updatEmail();
+            break;
+            
+            case "4": //update address.
+            updateAddress();
+            break;
+            
+            case "5": //update membership
+            updateMembershipType();
+            
+            case "0":
+            cancelMembership();
+         
+            case "B"://back to previous menu.
+            employeeMenu();
+            default:
+            System.out.println("Wrong choice");
+            break;
+         }
+      }
+   }
 
    public static void myUpdates() throws IOException{
       boolean fortsatt = true;
