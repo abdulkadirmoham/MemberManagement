@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 public class Abfitness {
 
    // Sokvog till SQLite-databas. OBS! andra sokvag sa att den pekar ut din databas
-   public static final String DB_URL = "jdbc:sqlite:membership_course_db4.7.db";
+   public static final String DB_URL = "jdbc:sqlite:C:/programmering/membership_course_db4.8.db";
    // Namnet pa den driver som anvands av java for attprata med SQLite
    public static final String DRIVER = "org.sqlite.JDBC";  
 
@@ -312,149 +312,151 @@ public class Abfitness {
    
    public static void newMember() throws IOException { 
    
-   //funkar
+  //funkar
    
-   System.out.println("Enter Date of birth (YYYYMMDD)");
-   int dateOfBirth = Integer.parseInt(input.readLine());
+                    System.out.println("Enter Date of birth (YYYYMMDD)");
+                    int dateOfBirth = Integer.parseInt(input.readLine());
 
-   System.out.println("Enter First name");
-   String mFirstName = input.readLine();
+                    System.out.println("Enter First name");
+                    String mFirstName = input.readLine();
 
-   System.out.println("Enter Last name");
-   String mLastName = input.readLine();
+                    System.out.println("Enter Last name");
+                    String mLastName = input.readLine();
 
-   System.out.println("Enter Email");
-   String mEmail = input.readLine();
+                    System.out.println("Enter Email");
+                    String mEmail = input.readLine();
 
-   System.out.println("Enter Phone number");
-   mPhoneNo = input.readLine();
+                    System.out.println("Enter Phone number");
+                    mPhoneNo = input.readLine();
 
-   System.out.println("Enter Address");
-   String mAddress = input.readLine();
+                    System.out.println("Enter Address");
+                    String mAddress = input.readLine();
 
-   System.out.println("Enter Zipcode");
-   int mZipCode = Integer.parseInt(input.readLine());                   
+                    System.out.println("Enter Zipcode");
+                    int mZipCode = Integer.parseInt(input.readLine());                   
                                                           
-   System.out.println("Enter end date");
-   endDate = input.readLine();
+                    System.out.println("Enter end date");
+                    endDate = input.readLine();
                     
-   System.out.println("Choose password");
-   String mPw = input.readLine();
+                    System.out.println("Choose password");
+                    String mPw = input.readLine();
                     
-   System.out.println("Choose membership type! \n Gold:399kr Silver:299kr Bronze:199kr");
-   String typeID = input.readLine();
+                    System.out.println("Choose membership type! \n Gold:399kr Silver:299kr Bronze:199kr");
+                    String typeID = input.readLine();
                     
-   System.out.println("Enter payment method, choose between: Direct debit, Invoice, Cashier");
-   String paymentMethod = input.readLine();
-                 
-   if (endDate.equals ("null")) {
+                    System.out.println("Enter payment method, choose between: Direct debit, Invoice, Cashier");
+                    String paymentMethod = input.readLine();
+                    
+                    
+                    
+                    
+                    
+                    
+                  if (endDate.equals ("null")) {
 
-      try{
-         String insertp = "INSERT INTO Member(dateOfBirth, mFirstName, mLastName, mAddress, mZipCode, mPhoneNo, mEmail, joinDate, mPw) VALUES(?,?,?,?,?,?,?,?,?)";
-         PreparedStatement pstmt = conn.prepareStatement(insertp);
-         pstmt.setInt(1, dateOfBirth);
-         pstmt.setString(2, mFirstName);
-         pstmt.setString(3, mLastName);
-         pstmt.setString(4, mAddress);
-         pstmt.setInt(5, mZipCode);
-         pstmt.setString(6, mPhoneNo);
-         pstmt.setString(7, mEmail);
-         pstmt.setInt(8, getTodaysdate());
-         pstmt.setString(9, mPw);
-         pstmt.executeUpdate();
-         pstmt.close();
+                        try {
+                            String insertp = "INSERT INTO Member(dateOfBirth, mFirstName, mLastName, mAddress, mZipCode, mPhoneNo, mEmail, joinDate, mPw) VALUES(?,?,?,?,?,?,?,?,?)";
+                            PreparedStatement pstmt = conn.prepareStatement(insertp);
+                            pstmt.setInt(1, dateOfBirth);
+                            pstmt.setString(2, mFirstName);
+                            pstmt.setString(3, mLastName);
+                            pstmt.setString(4, mAddress);
+                            pstmt.setInt(5, mZipCode);
+                            pstmt.setString(6, mPhoneNo);
+                            pstmt.setString(7, mEmail);
+                            pstmt.setInt(8, getTodaysdate());
+                            pstmt.setString(9, mPw);
+                            pstmt.executeUpdate();
+                            pstmt.close();
                             
-         System.out.println ("Welcome as a new member to FitnessAB! \n");
-      } 
-      catch (java.sql.SQLException e1) {
-         System.out.println(e1.getMessage());
-      }
-   } 
-   else {
-      try{
-         String insertd = "INSERT INTO Member(dateOfBirth, mFirstName, mLastName, mAddress, mZipCode, mPhoneNo, mEmail, joinDate, endDate, mPw) VALUES(?,?,?,?,?,?,?,?,?,?)";
-         PreparedStatement pstmt = conn.prepareStatement(insertd);
-         pstmt.setInt(1, dateOfBirth);
-         pstmt.setString(2, mFirstName);
-         pstmt.setString(3, mLastName);
-         pstmt.setString(4, mAddress);
-         pstmt.setInt(5, mZipCode);
-         pstmt.setString(6, mPhoneNo);
-         pstmt.setString(7, mEmail);
-         pstmt.setInt(8, getTodaysdate());
-         pstmt.setString(9, endDate);
-         pstmt.setString(10, mPw);
-         pstmt.executeUpdate();
-         pstmt.close();
+                           System.out.println ("Welcome as a new member to FitnessAB!");
+                        } catch (java.sql.SQLException e1) {
+                            System.out.println(e1.getMessage());
+                        }
+                    } else {
+                        try {
+                            String insertd = "INSERT INTO Member(dateOfBirth, mFirstName, mLastName, mAddress, mZipCode, mPhoneNo, mEmail, joinDate, endDate, mPw) VALUES(?,?,?,?,?,?,?,?,?,?)";
+                            PreparedStatement pstmt = conn.prepareStatement(insertd);
+                            pstmt.setInt(1, dateOfBirth);
+                            pstmt.setString(2, mFirstName);
+                            pstmt.setString(3, mLastName);
+                            pstmt.setString(4, mAddress);
+                            pstmt.setInt(5, mZipCode);
+                            pstmt.setString(6, mPhoneNo);
+                            pstmt.setString(7, mEmail);
+                            pstmt.setInt(8, getTodaysdate());
+                            pstmt.setString(9, endDate);
+                            pstmt.setString(10, mPw);
+                            pstmt.executeUpdate();
+                            pstmt.close();
                             
-         System.out.println ("Welcome as new member to FitnessAB, please go to main menu and choose CX to choose your payment method\n");
-      } 
-      catch (java.sql.SQLException e1) {
-            System.out.println(e1.getMessage());
-         }
+                           System.out.println ("Welcome as new member to FitnessAB");
+                        } catch (java.sql.SQLException e1) {
+                            System.out.println(e1.getMessage());
+                        }
                        
-      }
-      try{
-         String grud = "SELECT * FROM Member WHERE  memberID = (SELECT MAX(memberID)  FROM Member);";
-         PreparedStatement pstmt = conn.prepareStatement(grud);
+                    }
+                    try{
+                    String grud = "SELECT * FROM Member WHERE  memberID = (SELECT MAX(memberID)  FROM Member);";
+                      PreparedStatement pstmt = conn.prepareStatement(grud);
                       
-         ResultSet rs = pstmt.executeQuery(); 
-         while (rs.next()){
-            memberID = rs.getInt("memberID");
-            pstmt.close();
-            rs.close();                
-         }
-      }
-      catch (java.sql.SQLException e2){
-         System.out.println(e2.getMessage());
-      }
-      try{
-         String tudy = "Insert into Membership(memberID, typeID) VALUES(?,?)";
-         PreparedStatement pstmt = conn.prepareStatement(tudy);
-         pstmt.setInt(1, memberID);
-         pstmt.setString(2, typeID);
-         pstmt.executeUpdate();
-         pstmt.close();
-      }
-      catch (java.sql.SQLException e2){
-         System.out.println(e2.getMessage());
-      }
-      try{ 
-         String p1 = "Direct debit";
-         String p2 = "Invoice";
-         String p3 = "Cashier";
+                      ResultSet rs = pstmt.executeQuery(); 
+                       while (rs.next()){
+                        memberID = rs.getInt("memberID");
+                        pstmt.close();
+                        rs.close();
+                        System.out.println("Your member ID is " + memberID + "\n");                
+                     }
+                  }
+                  catch (java.sql.SQLException e2){
+                  System.out.println(e2.getMessage());
+               }
+            try{
+            String tudy = "Insert into Membership(memberID, typeID) VALUES(?,?)"; //insert into member tabellen memberID och typeID
+            PreparedStatement pstmt = conn.prepareStatement(tudy);
+                     pstmt.setInt(1, memberID);
+                     pstmt.setString(2, typeID);
+                     pstmt.executeUpdate();
+                     pstmt.close();
+                    
 
-         if (paymentMethod.matches("(?i)p1|p2|p3")){
+            }
+                  catch (java.sql.SQLException e2){
+                  System.out.println(e2.getMessage());
+               }
+              try{ 
+               String p1 = "Direct debit";
+               String p2 = "Invoice";
+              String p3 = "Cashier";
+            
+         if (paymentMethod.equalsIgnoreCase(p1) || paymentMethod.equalsIgnoreCase(p2) || paymentMethod.equalsIgnoreCase(p3)) { //kollar betalningsmetod som fylls in.
                  
             String diii = "Insert into Payment(memberID, paymentMethod, payDate) VALUES(?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(diii);
-            pstmt.setInt(1, memberID);
-            pstmt.setString(2, paymentMethod);
-            pstmt.setInt(3, payDate);
-            pstmt.executeUpdate();
-            pstmt.close();                               
-         }
-         else{ 
-            System.out.println ("Wrong choice.");       
-         }
-      }
-      catch (java.sql.SQLException e2){
-         System.out.println(e2.getMessage());
-      }
+                     pstmt.setInt(1, memberID);
+                     pstmt.setString(2, paymentMethod);
+                     pstmt.setString(3, addOneMonth());
+                     pstmt.executeUpdate();
+                     pstmt.close();
+                    
+
+            
+                  }
+                 else{ 
+                 System.out.println ("Wrong choice.");  
                  
-      try{
-         String diii = "Insert into Payment(memberID, paymentMethod, payDate) VALUES(?,?,?)";
-         PreparedStatement pstmt = conn.prepareStatement(diii);
-         pstmt.setInt(1, memberID);
-         pstmt.setString(2, paymentMethod);
-         pstmt.setInt(3, payDate);
-         pstmt.executeUpdate();
-         pstmt.close();
-      }
-      catch (java.sql.SQLException e2){
-         System.out.println(e2.getMessage());
-      }
-   }
+            
+                    
+               }
+            }
+                  catch (java.sql.SQLException e2){
+                  System.out.println(e2.getMessage());
+               }
+                 
+
+                
+               
+               }
        
    public static void memberMenu() throws IOException{
       boolean fortsatt = true;
