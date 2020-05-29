@@ -250,7 +250,7 @@ import java.util.*;
                             pstmt.executeUpdate();
                             pstmt.close();
                             
-                           System.out.println ("Welcome as new member to FitnessAB, please go to main menu and choose CX to choose your payment method\n");
+                           System.out.println ("Welcome as new member to FitnessAB \n");
                         } catch (java.sql.SQLException e1) {
                             System.out.println(e1.getMessage());
                         }
@@ -264,7 +264,8 @@ import java.util.*;
                        while (rs.next()){
                         memberID = rs.getInt("memberID");
                         pstmt.close();
-                        rs.close();                
+                        rs.close();
+                        System.out.println("Your member id is " + memberID);                
                      }
                   }
                   catch (java.sql.SQLException e2){
@@ -327,6 +328,7 @@ import java.util.*;
                   catch (java.sql.SQLException e2){
                   System.out.println(e2.getMessage());
                }
+               
                }
                
         public static void updatEmail() throws IOException { // funkar
