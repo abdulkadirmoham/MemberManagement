@@ -295,7 +295,7 @@ public class Abfitness {
             
             case "VM": // View member profile
             memberProfile();
-            myUpdates();
+            employeeUpdates();
             break;
 
             case "L":
@@ -502,6 +502,53 @@ public class Abfitness {
       }
    }   
 
+   public static void employeeUpdates() throws IOException{
+      boolean fortsatt = true;
+      while (true) { 
+      
+            System.out.println("1 - update payment method");
+            System.out.println("2 - Update Phone number for member");
+            System.out.println("3 - Update Email for member");
+            System.out.println("4 - Update Address for member");
+            System.out.println("5 - Update membership type");
+            System.out.println("0 - Cancel membership");
+            System.out.println("\n" + "B - Back");
+         
+         String val = input.readLine();
+         
+         switch (val.toUpperCase()) {
+         
+            case "1": // Update Payment Method
+            memberUpdatePayment();
+            break;
+                                        
+            case "2": //Update member phone number
+            updatePhoneNo();
+            break;
+
+            case "3": // Update email
+            updatEmail();
+            break;
+            
+            case "4": //update address.
+            updateAddress();
+            break;
+            
+            case "5": //update membership
+            updateMembershipType();
+            
+            case "0":
+            cancelMembership();
+         
+            case "B"://back to previous menu.
+            employeeMenu();
+            default:
+            System.out.println("Wrong choice");
+            break;
+         }
+      }
+   }
+
    public static void myUpdates() throws IOException{
       boolean fortsatt = true;
       while (true) { 
@@ -607,7 +654,7 @@ public class Abfitness {
       }
    }
                 
-      public static void deleteCourse() throws IOException { // Funkar om man inte vill ta bort courses som har coursesessions då bryts foreign key constraint
+      public static void deleteCourse() throws IOException { // Funkar om man inte vill ta bort courses som har coursesessions dï¿½ bryts foreign key constraint
          try {
             System.out.println("Enter courseID"); 
             courseID = Integer.parseInt(input.readLine());
@@ -785,7 +832,7 @@ public class Abfitness {
 
    
           
-   public static void bookCourse() throws IOException { //funkar, ändrat i SQL-sökning så att man får skriva facility-namn och får det utskrivet istället för ID
+   public static void bookCourse() throws IOException { //funkar, ï¿½ndrat i SQL-sï¿½kning sï¿½ att man fï¿½r skriva facility-namn och fï¿½r det utskrivet istï¿½llet fï¿½r ID
                
       System.out.println("Enter memberID");
       memberID = Integer.parseInt(input.readLine());
@@ -896,7 +943,7 @@ public class Abfitness {
       }
    }
    
-   public static void memberBookCourse() throws IOException { //funkar, ändrat i SQL-sökning så att man får skriva facility-namn och får det utskrivet istället för ID
+   public static void memberBookCourse() throws IOException { //funkar, ï¿½ndrat i SQL-sï¿½kning sï¿½ att man fï¿½r skriva facility-namn och fï¿½r det utskrivet istï¿½llet fï¿½r ID
                       
       System.out.println("Enter facility name");
       facilityName = input.readLine();
