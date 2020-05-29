@@ -28,7 +28,7 @@ public class Abfitness {
       static int paymentID;
       static int payDate;
       static String paymethod;
-      static String paymentmethod;
+      static String paymentMethod;
       static String paymentDate;
        // Facility
       static int facilityID;
@@ -262,6 +262,7 @@ public class Abfitness {
          System.out.println("CM - Cancel course for member");
          System.out.println("SB - See booked courses");
          System.out.println("RM - Create report on number of visits of specific course session"); 
+         System.out.println("VM - View member profile"); 
     	   System.out.println("L - Log out");
          
          String val = input.readLine();
@@ -290,6 +291,11 @@ public class Abfitness {
             
             case "RM": // Report on course attendance
             createReport();
+            break;
+            
+            case "VM": // View member profile
+            memberProfile();
+            myUpdates();
             break;
 
             case "L":
@@ -339,7 +345,7 @@ public class Abfitness {
    String typeID = input.readLine();
                     
    System.out.println("Enter payment method, choose between: Direct debit, Invoice, Cashier");
-   String paymentmethod = input.readLine();
+   String paymentMethod = input.readLine();
                  
    if (endDate.equals ("null")) {
 
@@ -418,12 +424,12 @@ public class Abfitness {
          String p2 = "Invoice";
          String p3 = "Cashier";
 
-         if (paymentmethod.matches("(?i)p1|p2|p3")){
+         if (paymentMethod.matches("(?i)p1|p2|p3")){
                  
-            String diii = "Insert into Payment(memberID, paymentmethod, payDate) VALUES(?,?,?)";
+            String diii = "Insert into Payment(memberID, paymentMethod, payDate) VALUES(?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(diii);
             pstmt.setInt(1, memberID);
-            pstmt.setString(2, paymentmethod);
+            pstmt.setString(2, paymentMethod);
             pstmt.setInt(3, payDate);
             pstmt.executeUpdate();
             pstmt.close();                               
@@ -437,10 +443,10 @@ public class Abfitness {
       }
                  
       try{
-         String diii = "Insert into Payment(memberID, paymentmethod, payDate) VALUES(?,?,?)";
+         String diii = "Insert into Payment(memberID, paymentMethod, payDate) VALUES(?,?,?)";
          PreparedStatement pstmt = conn.prepareStatement(diii);
          pstmt.setInt(1, memberID);
-         pstmt.setString(2, paymentmethod);
+         pstmt.setString(2, paymentMethod);
          pstmt.setInt(3, payDate);
          pstmt.executeUpdate();
          pstmt.close();
@@ -511,7 +517,7 @@ public class Abfitness {
          switch (val.toUpperCase()) {
          
             case "1": // Update Payment Method
-            updatepayment();
+            memberUpdatePayment();
             break;
                                         
             case "2": //Update member phone number
@@ -543,6 +549,26 @@ public class Abfitness {
    
    public static void myProfile() throws IOException {
       try {    
+         String profile = "SELECT Member.mFirstName, Member.mLastName, Member.dateOfBirth, Member.memberID, Membership.typeID, Member.mEmail, Member.mPhoneNo, Member.mAddress, Member.mZipCode, Payment.paymentMethod FROM Member, Membership, Payment WHERE Member.memberID =? AND Member.memberID = Membership.memberID AND Member.memberID = Payment.memberID";    
+         PreparedStatement pstmt = conn.prepareStatement(profile);
+         pstmt.setInt(1, memberID);
+         ResultSet rs = pstmt.executeQuery();
+         System.out.print(memberID +"\n");   
+         while (rs.next()) {
+            System.out.println("First name: " + rs.getString("mFirstName") + "\n" + "Last name: " + rs.getString("mLastName") + "\n" + "Date of birth: " + rs.getInt("dateOfBirth") + "\n" + "Member ID: "+ rs.getInt("memberID") + "\n" + "Membership type: " + rs.getString("typeID") + "\n" + "E-mail: " + rs.getString("mEmail") + "\n" + "Phone number: " + rs.getString("mPhoneNo") + "\n" + "Address: " + rs.getString("mAddress") + "\n" + "Zip code: "+ rs.getInt("mZipCode") + "\n" + "Payment method: " + rs.getString("paymentMethod"));
+         }
+         pstmt.close();
+         rs.close();
+      } 
+      catch (java.sql.SQLException e3) {
+         System.out.println(e3.getMessage());
+      }
+   }
+   public static void memberProfile() throws IOException {
+      try {    
+      System.out.println("Enter member ID");
+      memberID = Integer.parseInt(input.readLine()); 
+      
          String profile = "SELECT Member.mFirstName, Member.mLastName, Member.dateOfBirth, Member.memberID, Membership.typeID, Member.mEmail, Member.mPhoneNo, Member.mAddress, Member.mZipCode, Payment.paymentMethod FROM Member, Membership, Payment WHERE Member.memberID =? AND Member.memberID = Membership.memberID AND Member.memberID = Payment.memberID";    
          PreparedStatement pstmt = conn.prepareStatement(profile);
          pstmt.setInt(1, memberID);
@@ -998,28 +1024,66 @@ public class Abfitness {
        }
      }
 
-   public static void updatepayment() throws IOException { 
-      System.out.println("Enter payment ID");
-      paymentID = Integer.parseInt(input.readLine());
-                    /*System.out.println("Enter endDate");
-                    endDate = Integer.parseInt(input.readLine());*/
-         System.out.println("Enter payment method");
-         paymentmethod = input.readLine();
-         
-       try {
-         String insertq = "UPDATE Payment SET paymentmethod=? WHERE paymentID= ?";
-         PreparedStatement pstmt = conn.prepareStatement(insertq);
-         pstmt.setString(1, paymentmethod);
-         pstmt.setInt(2, paymentID);
+       public static void updatePayment() throws IOException {
+   
+       System.out.println("Enter member ID"); 
+       memberID = Integer.parseInt(input.readLine()); 
+       System.out.println ("Enter payment method, choose between: Direct debit, Invoice, Cashier"); 
+       paymentMethod = input.readLine(); 
+       
+           try {
+       String p1 = "Direct debit";
+       String p2 = "Invoice";
+       String p3 = "Cashier";
 
-         pstmt.executeUpdate();
-         System.out.println("Payment method is updated!");
-
-         } 
-         catch (java.sql.SQLException e2) {
-         System.out.println(e2.getMessage());
-       }
+         if (paymentMethod.equalsIgnoreCase(p1) || paymentMethod.equalsIgnoreCase(p2) || paymentMethod.equalsIgnoreCase(p3)){
+       
+       String payment = "UPDATE Payment SET paymentmethod=? WHERE memberID= ?"; 
+       PreparedStatement pstmt = conn.prepareStatement(payment);
+       pstmt.setString(1, paymentMethod);
+       pstmt.setInt(2, memberID); 
+       pstmt.executeUpdate();
+       pstmt.close(); 
+        
+       System.out.print ("Payment method updated successfully.   \n");  
       }
+      else {
+      System.out.println("Wrong choice."); 
+     }
+    }
+      catch (java.sql.SQLException e2) {
+       System.out.println(e2.getMessage());
+     }
+    }
+    
+   public static void memberUpdatePayment() throws IOException {
+       System.out.println ("Enter payment method, choose between: Direct debit, Invoice, Cashier"); 
+       paymentMethod = input.readLine(); 
+       
+           try {
+       String p1 = "Direct debit";
+       String p2 = "Invoice";
+       String p3 = "Cashier";
+
+         if (paymentMethod.equalsIgnoreCase(p1) || paymentMethod.equalsIgnoreCase(p2) || paymentMethod.equalsIgnoreCase(p3)){
+       
+       String payment = "UPDATE Payment SET paymentmethod=? WHERE memberID= ?"; 
+       PreparedStatement pstmt = conn.prepareStatement(payment);
+       pstmt.setString(1, paymentMethod);
+       pstmt.setInt(2, memberID); 
+       pstmt.executeUpdate();
+       pstmt.close(); 
+        
+       System.out.print ("Payment method updated successfully.   \n");  
+      }
+      else {
+      System.out.println("Wrong choice."); 
+     }
+    }
+      catch (java.sql.SQLException e2) {
+       System.out.println(e2.getMessage());
+     }
+    }
    
    public static void updatEmail() throws IOException { // funkar
            
