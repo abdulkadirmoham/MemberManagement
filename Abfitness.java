@@ -256,11 +256,12 @@ public class Abfitness { // The base code is taken from our previous project
       boolean fortsatt = true;
       while (true) { 
       
-         System.out.println("BC - Book course");
+         System.out.println("BC - Book course for member");
          System.out.println("CC - Create course");
+         System.out.println("CS - Create course session");
          System.out.println("DC - Delete course");
          System.out.println("CM - Cancel course for member");
-         System.out.println("SB - See booked courses");
+         System.out.println("SB - See members booked courses");
          System.out.println("RM - Create report on number of visits of specific course session"); 
          System.out.println("VM - View member profile"); 
     	   System.out.println("L - Log out");
@@ -275,6 +276,10 @@ public class Abfitness { // The base code is taken from our previous project
             
             case "CC": //create course
             createCourse();
+            break;
+            
+            case "CS": // create course session
+            createSession();
             break;
                   
             case "DC": //Delete course
