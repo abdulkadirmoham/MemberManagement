@@ -352,7 +352,7 @@ public class Abfitness { // The base code is taken from our previous project
                     System.out.println("Choose password");
                     String mPw = input.readLine();
                     
-                    System.out.println("Choose membership type! \n Gold:399kr Silver:299kr Bronze:199kr");
+                    System.out.println("Choose membership type! \nGold:399kr Silver:299kr Bronze:199kr");
                     String typeID = input.readLine();
                     
                     System.out.println("Enter payment method, choose between: Direct debit, Invoice, Cashier");
@@ -362,11 +362,15 @@ public class Abfitness { // The base code is taken from our previous project
                     
                     
                     
-                  String p1 = "Direct debit";
+               String p1 = "Direct debit";
                String p2 = "Invoice";
-              String p3 = "Cashier";
+               String p3 = "Cashier";
+               String p4 = "Gold";
+               String p5 = "Silver";
+               String p6 = "Bronze";
             
-         if (paymentMethod.equalsIgnoreCase(p1) || paymentMethod.equalsIgnoreCase(p2) || paymentMethod.equalsIgnoreCase(p3)) {   
+         if (paymentMethod.equalsIgnoreCase(p1) || paymentMethod.equalsIgnoreCase(p2) || paymentMethod.equalsIgnoreCase(p3)) { 
+           if (typeID.equalsIgnoreCase(p4) || typeID.equalsIgnoreCase(p5) || typeID.equalsIgnoreCase(p6))  { 
                   if (endDate.equals ("null")) {
 
                         try {
@@ -440,7 +444,7 @@ public class Abfitness { // The base code is taken from our previous project
                   System.out.println(e2.getMessage());
                }
               try{ 
-                //kollar betalningsmetod som fylls in.
+               
                  
             String diii = "Insert into Payment(memberID, paymentMethod, payDate) VALUES(?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(diii);
@@ -460,16 +464,14 @@ public class Abfitness { // The base code is taken from our previous project
                }
                  else{ 
                  System.out.println ("Wrong choice.");                  
-                  
-                 
-            
-                    
+                                                           
                }
-           
-                 
-
-                
-               
+             }
+                                           
+               else{ 
+                 System.out.println ("Wrong choice.");                  
+                                                           
+               }
                }
        
    public static void memberMenu() throws IOException{
