@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 public class Abfitness { // The base code is taken from our previous project
 
    // Sokvog till SQLite-databas. OBS! andra sokvag sa att den pekar ut din databas
-   public static final String DB_URL = "jdbc:sqlite:C:/programmering/membership_course_db4.9.db";
+   public static final String DB_URL = "jdbc:sqlite:C:/programmering/membership_course_db5.0.db";
    // Namnet pa den driver som anvands av java for attprata med SQLite
    public static final String DRIVER = "org.sqlite.JDBC";  
 
@@ -265,7 +265,7 @@ public class Abfitness { // The base code is taken from our previous project
          System.out.println("SB - See members booked courses");
          System.out.println("RM - Create report on number of visits of specific course session"); 
          System.out.println("VM - View member profile"); 
-         System.out.println("NE - Create employee profile"); 
+         
     	   System.out.println("L - Log out");
          
          String val = input.readLine();
@@ -305,9 +305,7 @@ public class Abfitness { // The base code is taken from our previous project
             myUpdates();
             break;
             
-            case "NE": //create employee profile
-            createEmployee();
-            break;
+            
             
             case "L":
             System.out.println("Signed out.");
@@ -605,62 +603,7 @@ public class Abfitness { // The base code is taken from our previous project
       }
    }
    
-  public static void createEmployee() throws IOException {
-            System.out.println("Enter facilityID");
-
-            
-            System.out.println("Enter First name");
-            String eFirstName = input.readLine();
-            
-            System.out.println("Enter Last name");
-            String eLastName = input.readLine();
-            
-            System.out.println("Enter position");
-            String position = input.readLine();
-            
-            System.out.println("Enter Phone number");
-            String ePhoneNo = input.readLine();
-                        
-            System.out.println("Enter Email");
-            String eEmail = input.readLine();
-            
-            System.out.println("Enter password");
-            String ePw = input.readLine();                       
-                       
-               try {
-                  String insertp = "INSERT INTO Employee (facilityID, eFirstName, eLastName, position, ePhoneNo, eEmail, ePw) VALUES (?,?,?,?,?,?,?)";
-                  PreparedStatement pstmt = conn.prepareStatement(insertp);
-                  pstmt.setInt(1, facilityID);
-                  pstmt.setString(2, eFirstName);
-                  pstmt.setString(3, eLastName);
-                  pstmt.setString(4, position);
-                  pstmt.setString(5, ePhoneNo);
-                  pstmt.setString(6, eEmail);
-                  pstmt.setString(7, ePw);         
-                  pstmt.executeUpdate();
-                  pstmt.close();
-                  
-                  }
-               catch (java.sql.SQLException e1){
-                  System.out.println(e1.getMessage());         
-                  }
-                  try{
-                    String grud = "SELECT * FROM Employee WHERE  empID = (SELECT MAX(empID)  FROM Employee)";
-                      PreparedStatement pstmt = conn.prepareStatement(grud);
-                      
-                      ResultSet rs = pstmt.executeQuery(); 
-                       while (rs.next()){
-                        empID = rs.getInt("empID");
-                        pstmt.close();
-                        rs.close();
-                        System.out.println("Employee ID " + empID + " created successfully! \n");                
-                     }
-                  }
-                  catch (java.sql.SQLException e2){
-                  System.out.println(e2.getMessage());
-               }
-                } 
-
+  
    
             
    public static void createCourse() throws IOException { // funkar
