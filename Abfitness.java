@@ -263,6 +263,7 @@ public class Abfitness { // The base code is taken from our previous project
          System.out.println("DC - Delete course");
          System.out.println("CM - Cancel course for member");
          System.out.println("SB - See members booked courses");
+         System.out.println("RE - Create report on enrollment"); 
          System.out.println("RM - Create report on number of visits of specific course session"); 
          System.out.println("VM - View member profile"); 
          
@@ -298,6 +299,10 @@ public class Abfitness { // The base code is taken from our previous project
             
             case "RM": // Report on course attendance
             createReport();
+            break;
+            
+            case "RE": //report on enroll
+            createReportEnrollment();
             break;
             
             case "VM": // View member profile
@@ -658,6 +663,27 @@ public class Abfitness { // The base code is taken from our previous project
          System.out.println(e);            
       }
    }
+   public static void createReportEnrollment() throws IOException { 
+       System.out.println("Enter join date in format YYYYMMDD");
+                    joinDate = Integer.parseInt(input.readLine());
+
+                    try {
+                        String selectg = "select * FROM MEMBER WHERE joinDate >= ?";
+                        PreparedStatement pstmt = conn.prepareStatement(selectg);
+                        pstmt.setInt(1, joinDate);
+                        ResultSet rs = pstmt.executeQuery();
+                        System.out.println("memberID, date of birth, first name, last name, address, Zip code, phone number, email, join date, end date");
+                        while (rs.next()) {
+                            
+                            System.out.println(rs.getInt("memberID") + " " + rs.getInt("dateOfBirth") + " " + rs.getString("mFirstName") + " " + rs.getString("mLastName") + " " + rs.getString("mAddress") + " " + rs.getInt("mZipCode") + " " + rs.getInt("mPhoneNo") + " " + rs.getString("mEmail") + " " + rs.getInt("joinDate") + " " + rs.getString("endDate"));
+                        }
+                        pstmt.close();
+                        rs.close();
+
+                    } catch (java.sql.SQLException e3) {
+                        System.out.println(e3.getMessage());
+                    }
+                    }
             
    public static void createReport() throws IOException { //funkar
       try {
